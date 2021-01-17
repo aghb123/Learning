@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>链接伪类选择器</title>
+    <style>
+        /* 未访问的链接 */
+        
+        a:link {
+            color: #333;
+            text-decoration: none;
+        }
+        /* 已访问的链接 */
+        
+        a:visited {
+            color: orange;
+        }
+        /* 选择鼠标经过的链接 */
+        
+        a:hover {
+            color: red;
+        }
+        /* 选择的是鼠标正在按下还没有弹起鼠标的那个链接 */
+        
+        a:active {
+            color: green;
+        }
+    </style>
+</head>
+
+<body>
+    <a href="#">小猪佩奇</a>
+</body>
+
+</html>

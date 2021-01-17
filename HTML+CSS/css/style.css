@@ -1,0 +1,5 @@
+/* CSS文件里面只有样式，没有标签 */
+div {
+    color: red;
+    font-size: 30px;
+}
