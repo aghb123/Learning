@@ -203,3 +203,80 @@ reset 重新设置的意思，其实就是用来设置分支的头部指向，�
   ——情景一：版本刚一提交(commit)到仓库，突然想起漏掉两个文件还没有添加(add)
 
   ——情景二：版本刚一提交(commit)到仓库，突然想起版本说明写得不够全面，无法彰显本次修改的重大意义
+
++ 执行带`--amend`选项的`commit`提交命令，Git就会更正最近的一次提交
+
+### 删除文件
+
+不小心删除本地仓库里的文件，可以通过暂存区恢复
+
+`git checkout -- README.md`
+
++ `git rm 文件名`
+
+  ——该命令删除的只是工作目录和暂存区域的文件，也就是取消跟踪，再下次提交时不纳入版本管理
+
+  ——当工作目录和暂存区域的同一个文件存在不同内容时，执行`git rm -f 文件名`命令就可以把两个都删除
+
+  ——如果只删除暂存区域的文件(保留工作目录的)，那么可以执行`git rm --cached 文件名`命令实现目的
+
+### 重命名文件
+
++ `git mv 旧文件名 新文件名`
+
+  ——ren/mv 旧文件名 新文件名
+
+  ——git rm 旧文件名
+
+  ——git add 新文件名
+
+### `Git`分支
+
+ <img src="git学习.assets/image-20210120210157739.png" alt="image-20210120210157739" style="zoom:80%;" />
+
+1. 创建分支
+
+`git branch 分支名`
+
+2. 切换分支
+
+`git checkout 分支名`
+
+```
+G:\github\Git_test2>git log --decorate --oneline --graph --all
+* 2aac3cc (HEAD -> master) change the README file again
+| * 4d2155d (feature) change the README file
+|/
+* 95a0e76 commit all modified file plus readme
+* 32556e1 pinyougou
+```
+
+3. 分支的合并
+
+`git merge 分支名`
+
+```
+G:\github\Git_test2>git log --decorate --oneline --graph --all
+*   b112584 (HEAD -> master) fix conflicts
+|\
+| * 4d2155d (feature) change the README file
+* | 2aac3cc change the README file again
+|/
+* 95a0e76 commit all modified file plus readme
+* 32556e1 pinyougou
+```
+
+4. 删除分支
+
+`git branch -d 分支名`
+
+### `checkout`
+
+两种功能：
+
+1. 从历史快照(或者暂存区域)中拷贝文件到工作目录
+2. 切换分支
+
+`checkout`命令和`reset`命令都可以用于恢复指定快照的指定文件，并且都不会改变HEAD指针的指向
+
+区别是reset命令只将指定文件恢复到暂存区域(--mixed)，而checkout命令同时覆盖暂存区域和工作目录
