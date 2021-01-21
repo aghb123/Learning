@@ -280,3 +280,83 @@ G:\github\Git_test2>git log --decorate --oneline --graph --all
 `checkout`命令和`reset`命令都可以用于恢复指定快照的指定文件，并且都不会改变HEAD指针的指向
 
 区别是reset命令只将指定文件恢复到暂存区域(--mixed)，而checkout命令同时覆盖暂存区域和工作目录
+
+### 本地仓库往远程仓库推送
+
+```
+G:\github\Learning>git status
+On branch main
+Your branch is up to date with 'origin/main'.
+
+Changes not staged for commit:
+  (use "git add/rm <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+        deleted:    HTML+CSS/css/Cutterman_panel_3.5.0_201711141423.exe
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+        HTML+CSS/css/Cutterman_panel_3.5.0_201711141423.zip
+
+no changes added to commit (use "git add" and/or "git commit -a")
+
+G:\github\Learning>git add HTML+CSS/css/Cutterman_panel_3.5.0_201711141423.zip
+
+G:\github\Learning>git rm HTML+CSS/css/Cutterman_panel_3.5.0_201711141423.exe
+rm 'HTML+CSS/css/Cutterman_panel_3.5.0_201711141423.exe'
+
+G:\github\Learning>git status
+On branch main
+Your branch is up to date with 'origin/main'.
+
+Changes to be committed:
+  (use "git restore --staged <file>..." to unstage)
+        renamed:    HTML+CSS/css/Cutterman_panel_3.5.0_201711141423.exe -> HTML+CSS/css/Cutterman_panel_3.5.0_201711141423.zip
+
+
+G:\github\Learning>git commit -m "Replace the exe file"
+[main 8383346] Replace the exe file
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+ rename HTML+CSS/css/{Cutterman_panel_3.5.0_201711141423.exe => Cutterman_panel_3.5.0_201711141423.zip} (70%)
+
+G:\github\Learning>git push origin main
+Enumerating objects: 8, done.
+Counting objects: 100% (8/8), done.
+Delta compression using up to 16 threads
+Compressing objects: 100% (5/5), done.
+Writing objects: 100% (5/5), 1.19 MiB | 173.00 KiB/s, done.
+Total 5 (delta 3), reused 0 (delta 0), pack-reused 0
+remote: Resolving deltas: 100% (3/3), completed with 3 local objects.
+To https://github.com/aghb123/Learning.git
+   9932b75..8383346  main -> main
+```
+
+**工作区的更改必须线提交到本地仓库，才能推送到远程仓库里**
+
+### 删除Git本地仓库
+
+删除Git本地仓库的根本原理是删除“Git本地仓库”里面的根目录下面的隐藏文件夹".git"
+
+方法一：自己手动删除掉Git本地仓库里面的根目录下面的隐藏文件夹".git"
+
+方法二：在本地仓库的目录下调用命令行删除根目录下的.git文件夹，输入
+
+```
+find . -name ".git" | xargs rm -Rf
+```
+
+检验是否成功删除了本地仓库：在Gitbash中进入仓库的目录中，如果目录末尾没有"(master)"，说明成功删除了本地仓库
+
+```
+WZ@DESKTOP-8SQ1L5C MINGW64 /g/github/demo (master)
+$ find . -name ".git" | xargs rm -Rf
+
+WZ@DESKTOP-8SQ1L5C MINGW64 /g/github/demo
+$
+```
+
+### gitbash无法显示中文
+
+```
+git config --global core.quotepath false
+```
+
