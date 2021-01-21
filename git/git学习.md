@@ -360,3 +360,44 @@ $
 git config --global core.quotepath false
 ```
 
+### 无法推送的一种原因
+
+```
+WZ@DESKTOP-8SQ1L5C MINGW64 /g/github/Learning (main)
+$ git push origin main
+To https://github.com/aghb123/Learning.git
+ ! [rejected]        main -> main (fetch first)
+error: failed to push some refs to 'https://github.com/aghb123/Learning.git'
+hint: Updates were rejected because the remote contains work that you do
+hint: not have locally. This is usually caused by another repository pushing
+hint: to the same ref. You may want to first integrate the remote changes
+hint: (e.g., 'git pull ...') before pushing again.
+hint: See the 'Note about fast-forwards' in 'git push --help' for details.
+
+WZ@DESKTOP-8SQ1L5C MINGW64 /g/github/Learning (main)
+$ git pull
+remote: Enumerating objects: 5, done.
+remote: Counting objects: 100% (5/5), done.
+remote: Compressing objects: 100% (3/3), done.
+remote: Total 3 (delta 1), reused 0 (delta 0), pack-reused 0
+Unpacking objects: 100% (3/3), 722 bytes | 3.00 KiB/s, done.
+From https://github.com/aghb123/Learning
+   5f26f0e..5bf2c62  main       -> origin/main
+Merge made by the 'recursive' strategy.
+ README.md | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+WZ@DESKTOP-8SQ1L5C MINGW64 /g/github/Learning (main)
+$ git push origin main
+Enumerating objects: 15, done.
+Counting objects: 100% (13/13), done.
+Delta compression using up to 16 threads
+Compressing objects: 100% (7/7), done.
+Writing objects: 100% (7/7), 1.96 KiB | 1.96 MiB/s, done.
+Total 7 (delta 5), reused 0 (delta 0), pack-reused 0
+remote: Resolving deltas: 100% (5/5), completed with 4 local objects.
+To https://github.com/aghb123/Learning.git
+   5bf2c62..0192cd2  main -> main
+```
+
+本地仓库未与远程仓库同步(也就是远程仓库所作的改变本地仓库没有跟进)，此时推送会失败
