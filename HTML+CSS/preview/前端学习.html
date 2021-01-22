@@ -1,71 +1,77 @@
 <html>
-  <head>
-	  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
     <title>i5ting_ztree_toc:前端学习</title>
-		<link href="toc/style/github-bf51422f4bb36427d391e4b75a1daa083c2d840e.css" media="all" rel="stylesheet" type="text/css"/>
-		<link href="toc/style/github2-d731afd4f624c99a4b19ad69f3083cd6d02b81d5.css" media="all" rel="stylesheet" type="text/css"/>
-		<link href="toc/css/zTreeStyle/zTreeStyle.css" media="all" rel="stylesheet" type="text/css"/>
-	  <style>
-		pre {
-		    counter-reset: line-numbering;
-		    border: solid 1px #d9d9d9;
-		    border-radius: 0;
-		    background: #fff;
-		    padding: 0;
-		    line-height: 23px;
-		    margin-bottom: 30px;
-		    white-space: pre;
-		    overflow-x: auto;
-		    word-break: inherit;
-		    word-wrap: inherit;
-		}
+    <link href="toc/style/github-bf51422f4bb36427d391e4b75a1daa083c2d840e.css" media="all" rel="stylesheet" type="text/css" />
+    <link href="toc/style/github2-d731afd4f624c99a4b19ad69f3083cd6d02b81d5.css" media="all" rel="stylesheet" type="text/css" />
+    <link href="toc/css/zTreeStyle/zTreeStyle.css" media="all" rel="stylesheet" type="text/css" />
+    <style>
+        pre {
+            counter-reset: line-numbering;
+            border: solid 1px #d9d9d9;
+            border-radius: 0;
+            background: #fff;
+            padding: 0;
+            line-height: 23px;
+            margin-bottom: 30px;
+            white-space: pre;
+            overflow-x: auto;
+            word-break: inherit;
+            word-wrap: inherit;
+        }
+        
+        pre a::before {
+            content: counter(line-numbering);
+            counter-increment: line-numbering;
+            padding-right: 1em;
+            /* space after numbers */
+            width: 25px;
+            text-align: right;
+            opacity: 0.7;
+            display: inline-block;
+            color: #aaa;
+            background: #eee;
+            margin-right: 16px;
+            padding: 2px 10px;
+            font-size: 13px;
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
+            -khtml-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+        
+        pre a:first-of-type::before {
+            padding-top: 10px;
+        }
+        
+        pre a:last-of-type::before {
+            padding-bottom: 10px;
+        }
+        
+        pre a:only-of-type::before {
+            padding: 10px;
+        }
+        
+        .highlight {
+            background-color: #ffffcc
+        }
+        /* RIGHT */
+    </style>
+</head>
 
-		pre a::before {
-		  content: counter(line-numbering);
-		  counter-increment: line-numbering;
-		  padding-right: 1em; /* space after numbers */
-		  width: 25px;
-		  text-align: right;
-		  opacity: 0.7;
-		  display: inline-block;
-		  color: #aaa;
-		  background: #eee;
-		  margin-right: 16px;
-		  padding: 2px 10px;
-		  font-size: 13px;
-		  -webkit-touch-callout: none;
-		  -webkit-user-select: none;
-		  -khtml-user-select: none;
-		  -moz-user-select: none;
-		  -ms-user-select: none;
-		  user-select: none;
-		}
+<body>
+    <div>
+        <div style='width:25%;'>
+            <ul id="tree" class="ztree" style='width:100%'>
 
-		pre a:first-of-type::before {
-		  padding-top: 10px;
-		}
-
-		pre a:last-of-type::before {
-		  padding-bottom: 10px;
-		}
-
-		pre a:only-of-type::before {
-		  padding: 10px;
-		}
-
-		.highlight { background-color: #ffffcc } /* RIGHT */
-		</style>
-  </head>
-  <body>
-	  <div>
-				<div style='width:25%;'>
-						<ul id="tree" class="ztree" style='width:100%'>
-
-						</ul>
-				</div>
+            </ul>
+        </div>
         <div id='readme' style='width:70%;margin-left:20%;'>
-          	<article class='markdown-body'>
-            	<h1 id="-">快捷键</h1>
+            <article class='markdown-body'>
+                <h1 id="-">快捷键</h1>
 <table>
 <thead>
 <tr>
@@ -2291,7 +2297,7 @@ a:hover {
 </tr>
 </tbody>
 </table>
-<p><img src="前端学习.assets/位置示意图.png" alt=""></p>
+<p><img src="前端学习.assets/位置示意图.png" alt="d" style="zoom:50%;" /></p>
 <p>图片、表单都属于行内块元素，默认的<code>vertical-align</code>是基线对齐，此时给图片、表单这些行内块元素的<code>vertical-align</code>属性设置为<code>middle</code>就可以让文字和图片垂直居中对齐了</p>
 <p><strong>解决图片底部默认空白缝隙问题</strong></p>
 <p>bug:图片底侧会有一个空白缝隙，原因是行内块元素会和文字的基线对齐</p>
@@ -2825,7 +2831,7 @@ body {
 <li>伪元素选择器和标签选择器一样，权重为1</li>
 </ul>
 <p><strong>伪元素选择器使用场景1：伪元素字体图标</strong></p>
-<p><img src="前端学习.assets/字体图标.png" alt=""></p>
+<p><img src="preview/figure/字体图标.png" alt=""></p>
 <pre><code class="lang-css">div::after {
     position: absolute;
     top: 10px;
@@ -2940,7 +2946,7 @@ div:hover {
 <p>转换(transform)是CSS3中具有颠覆性的特征之一，可以实现元素的位移、旋转、缩放等效果</p>
 <p>2D转换是改变标签在二维平面上的位置和形状的一种技术</p>
 <p><img src="前端学习.assets/image-20210122204807961.png" alt="image-20210122204807961" style="zoom:80%;" /></p>
-<p>#####移动：translate</p>
+<h5 id="-translate">移动：translate</h5>
 <p>2D移动是2D转换里面的一种功能，可以改变元素在页面中的位置，类似定位</p>
 <pre><code class="lang-css">transform: translate(x,y); 
 //或者分开写
@@ -2954,7 +2960,7 @@ transform: translateY(n);
 <li>translate中的百分比单位是相对于自身元素的translate:(50%,50%)</li>
 <li>对行内标签没有效果</li>
 </ol>
-<p>#####旋转：rotate</p>
+<h5 id="-rotate">旋转：rotate</h5>
 <pre><code class="lang-css">transform: rotate(度数);
 </code></pre>
 <p>重点：</p>
@@ -2966,7 +2972,7 @@ transform: translateY(n);
 <li><p>默认旋转的中心点是元素的中心点</p>
 </li>
 </ol>
-<p>#####缩放：scale</p>
+<h5 id="-scale">缩放：scale</h5>
 <h5 id="2d-transform-origin">2D转换中心点<code>transform-origin</code></h5>
 <p>可以设置元素转换的中心点</p>
 <pre><code class="lang-css">transform-origin: x y;
@@ -3129,24 +3135,29 @@ transform: translateY(n);
 </tbody>
 </table>
 
-          	</article>
+            </article>
         </div>
-		</div>
-  </body>
+    </div>
+</body>
+
 </html>
 <script type="text/javascript" src="toc/js/jquery-1.4.4.min.js"></script>
 <script type="text/javascript" src="toc/js/jquery.ztree.all-3.5.min.js"></script>
 <script type="text/javascript" src="toc/js/ztree_toc.js"></script>
 <script type="text/javascript" src="toc_conf.js"></script>
+<!-- <script type="text/javascript" src="toc/js/run_prettify.js"></script> -->
+<script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
+<SCRIPT type="text/javascript">
+    <!--
+    $(document).ready(function() {
+        var css_conf = eval(markdown_panel_style);
+        $('#readme').css(css_conf)
 
-<SCRIPT type="text/javascript" >
-<!--
-$(document).ready(function(){
-    var css_conf = eval(markdown_panel_style);
-    $('#readme').css(css_conf)
-    
-    var conf = eval(jquery_ztree_toc_opts);
-		$('#tree').ztree_toc(conf);
-});
-//-->
+        var conf = eval(jquery_ztree_toc_opts);
+        setTimeout(function() {
+            $('#tree').ztree_toc(conf);
+        }, 500);
+
+    });
+    //-->
 </SCRIPT>
