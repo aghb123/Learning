@@ -1,0 +1,276 @@
+<html>
+
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>i5ting_ztree_toc:MarkDown基础</title>
+    <link href="toc/style/github-bf51422f4bb36427d391e4b75a1daa083c2d840e.css" media="all" rel="stylesheet" type="text/css" />
+    <link href="toc/style/github2-d731afd4f624c99a4b19ad69f3083cd6d02b81d5.css" media="all" rel="stylesheet" type="text/css" />
+    <link href="toc/css/zTreeStyle/zTreeStyle.css" media="all" rel="stylesheet" type="text/css" />
+    <style>
+        pre {
+            counter-reset: line-numbering;
+            border: solid 1px #d9d9d9;
+            border-radius: 0;
+            background: #fff;
+            padding: 0;
+            line-height: 23px;
+            margin-bottom: 30px;
+            white-space: pre;
+            overflow-x: auto;
+            word-break: inherit;
+            word-wrap: inherit;
+        }
+        
+        pre a::before {
+            content: counter(line-numbering);
+            counter-increment: line-numbering;
+            padding-right: 1em;
+            /* space after numbers */
+            width: 25px;
+            text-align: right;
+            opacity: 0.7;
+            display: inline-block;
+            color: #aaa;
+            background: #eee;
+            margin-right: 16px;
+            padding: 2px 10px;
+            font-size: 13px;
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
+            -khtml-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+        
+        pre a:first-of-type::before {
+            padding-top: 10px;
+        }
+        
+        pre a:last-of-type::before {
+            padding-bottom: 10px;
+        }
+        
+        pre a:only-of-type::before {
+            padding: 10px;
+        }
+        
+        .highlight {
+            background-color: #ffffcc
+        }
+        /* RIGHT */
+    </style>
+</head>
+
+<body>
+    <div>
+        <div style='width:25%;'>
+            <ul id="tree" class="ztree" style='width:100%'>
+
+            </ul>
+        </div>
+        <div id='readme' style='width:70%;margin-left:20%;'>
+            <article class='markdown-body'>
+                <h1 id="markdown-">MarkDown基础</h1>
+<h2 id="-">标题</h2>
+<p>标题使用#加内容书写，注意#后面要加空格，#的数量决定标题的级别</p>
+<h1 id="-1">标题1</h1>
+<h2 id="-2">标题2</h2>
+<h3 id="-3">标题3</h3>
+<h2 id="-">文字</h2>
+<h3 id="-">删除线</h3>
+<p><del>文字</del></p>
+<p><code>~~文字~~</code></p>
+<h3 id="-">斜体</h3>
+<p><em>文字</em></p>
+<p><code>*文字*</code></p>
+<h3 id="-">加粗</h3>
+<p><strong>文字</strong></p>
+<p><code>**文字**</code></p>
+<h3 id="-">斜体+加粗</h3>
+<p><strong><em>文字</em></strong></p>
+<p><code>***文字***</code></p>
+<h3 id="-">下划线</h3>
+<p>HTML语法(快捷键ctrl+u)</p>
+<p><u>文字</u></p>
+<p><code>&lt;u&gt;文字&lt;/u&gt;</code></p>
+<h3 id="-">高亮（需勾选扩展语法，去选严格模式）</h3>
+<p>==1111==</p>
+<p><code>==1111==</code></p>
+<h3 id="-">下标（需勾选扩展语法）</h3>
+<p>水 H~2~O</p>
+<p><code>H~2~O</code></p>
+<h3 id="-">上标（需勾选扩展语法）</h3>
+<p>面积m^2^</p>
+<p><code>m^2^</code></p>
+<h3 id="-">表情符号</h3>
+<p>Emoji支持表情符号，你可以用系统默认的Emoji符号（无法支持Windows用户）。也可以用图片的表情，输入：会出现智能提示</p>
+<p>:smile:<code>:smile:</code></p>
+<p>:cow:<code>:cow:</code>​</p>
+<p>:100:<code>:100:</code></p>
+<p>:alarm_clock:</p>
+<h3 id="-">表格</h3>
+<p>使用<code>|</code>来分割不同的单元格，使用<code>-</code>来分隔表头和其他行</p>
+<pre class="prettyprint linenums:0"><code>name | price
+--- | ---
+fried chicken | 19
+cola|5
+</code></pre><blockquote>
+<p>为了使MarkDown更清晰，<code>|</code>和<code>-</code>两侧需要至少有一个空格（最左侧和最右侧的<code>|</code>外就不需要了）。</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th>name</th>
+<th>price</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>fried chicken</td>
+<td>19</td>
+</tr>
+<tr>
+<td>cola</td>
+<td>5</td>
+</tr>
+</tbody>
+</table>
+<p>为了美观，可以使用空格对齐不同行的单元格，并在左右两侧都使用<code>|</code>来标记单元格边界，在表头下方的分隔线标记中加入<code>:</code>，即可标记下方单元格内容的对齐方式：</p>
+<pre><code class="lang-markdown">| name       | price |
+| :--------- |:---:|
+| fried chicken | 19 |
+| cola | 32|
+单个:在左边为左对齐，在右边为右对齐；两端都有:为居中
+</code></pre>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">name</th>
+<th style="text-align:center">price</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">fried chicken</td>
+<td style="text-align:center">19</td>
+</tr>
+<tr>
+<td style="text-align:left">cola</td>
+<td style="text-align:center">32</td>
+</tr>
+</tbody>
+</table>
+<h3 id="-">引用</h3>
+<pre><code class="lang-markdown">&gt;&quot;后悔创业&quot;
+</code></pre>
+<blockquote>
+<p>&quot;后悔创业&quot;</p>
+</blockquote>
+<pre class="prettyprint linenums:0"><code>&gt;也可以在引用中
+&gt;&gt;使用嵌套的引用
+</code></pre><blockquote>
+<p>也可以在引用中</p>
+<blockquote>
+<p>使用嵌套的引用</p>
+</blockquote>
+</blockquote>
+<h3 id="-">列表</h3>
+<h4 id="-">无序列表--符号 空格</h4>
+<pre class="prettyprint linenums:0"><code>* 可以使用`*`作为标记
++ 也可以使用`+`
+- 或者`-`
+</code></pre><ul>
+<li>可以使用<code>*</code>作为标记</li>
+<li><p>也可以使用<code>+</code></p>
+</li>
+<li><p>或者<code>-</code></p>
+</li>
+</ul>
+<h4 id="-">有序列表--数字<code>.</code>空格</h4>
+<pre class="prettyprint linenums:0"><code>1. 有序列表以数字和`.`开始；
+2. 数字的序列并不会影响生成的列表序列；
+3. 但仍然推荐按照自然顺序（1.2.3...）编写。
+</code></pre><ol>
+<li>有序列表以数字和<code>.</code>开始；</li>
+<li>数字的序列并不会影响生成的列表序列；</li>
+<li>但仍然推荐按照自然顺序（1.2.3...）编写。</li>
+</ol>
+<h3 id="-">代码</h3>
+<h4 id="-">代码块</h4>
+<pre><code class="lang-markdown">​```语言名称
+</code></pre>
+<pre><code class="lang-java">public static void main(String[] args){
+}
+</code></pre>
+<h4 id="-">行内代码</h4>
+<pre class="prettyprint linenums:0"><code>也可以通过``,插入行内代码（`是`Tab`键上边、数字`1`左侧的那个按键）:
+例如`Markdown`
+</code></pre><p><code>Markdown</code></p>
+<p><code>java</code></p>
+<p><code>C</code></p>
+<h5 id="-">转换规则</h5>
+<p>代码块中的文本（包括Markdown语法）都会显示为原始内容</p>
+<h3 id="-">分割线</h3>
+<p>可以在一行中使用三个或更多的<code>*</code>、<code>-</code>或<code>_</code>来添加分割线（<code></code>）:</p>
+<pre><code class="lang-markdown">***
+-----
+____
+</code></pre>
+<hr>
+<hr>
+<hr>
+<h3 id="-">跳转</h3>
+<h4 id="-">外部跳转--超链接</h4>
+<p>格式为<code>[link text](link)</code>。</p>
+<pre class="prettyprint linenums:0"><code>[帮助文档](https://support.typora.io/Links/#faq)
+</code></pre><p><a href="https://support.typora.io/Links/#faq">帮助文档</a></p>
+<h4 id="-typora-">内部跳转--本文件内跳（Typora支持）</h4>
+<p>格式为<code>[link text](#要去的目的地--标题)</code>。</p>
+<pre><code class="lang-markdown">[我想跳转](#代码)
+</code></pre>
+<p><a href="#代码">我想跳转</a></p>
+<h4 id="-">自动链接</h4>
+<p>使用<code>&lt;&gt;</code>包括的URL或邮箱地址会被自动转换为超链接：</p>
+<pre><code class="lang-markdown">&lt;https://www.baidu.com&gt;
+&lt;123@email.com&gt;
+</code></pre>
+<p><a href="https:www.bilibili.com">https:www.bilibili.com</a></p>
+<h3 id="-">图片</h3>
+<pre><code class="lang-markdown">![自己起的图片名字](图片地址或者图片本地存储的路径)
+</code></pre>
+<h4 id="-">网上的图片</h4>
+<p><img src="MarkDown基础.assets/timg" alt="friedChicken"></p>
+<h4 id="-">本地图片</h4>
+<pre><code class="lang-markdown">![friedChicken](MarkDown基础.assets\timg.jfif)
+在同一个文件夹里（用相对路径）
+或者直接拷贝
+</code></pre>
+<p><img src="MarkDown基础.assets\timg.jfif" alt="friedChicken"></p>
+
+            </article>
+        </div>
+    </div>
+</body>
+
+</html>
+<script type="text/javascript" src="toc/js/jquery-1.4.4.min.js"></script>
+<script type="text/javascript" src="toc/js/jquery.ztree.all-3.5.min.js"></script>
+<script type="text/javascript" src="toc/js/ztree_toc.js"></script>
+<script type="text/javascript" src="toc_conf.js"></script>
+<!-- <script type="text/javascript" src="toc/js/run_prettify.js"></script> -->
+<script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
+<SCRIPT type="text/javascript">
+    <!--
+    $(document).ready(function() {
+        var css_conf = eval(markdown_panel_style);
+        $('#readme').css(css_conf)
+
+        var conf = eval(jquery_ztree_toc_opts);
+        setTimeout(function() {
+            $('#tree').ztree_toc(conf);
+        }, 500);
+
+    });
+    //-->
+</SCRIPT>
