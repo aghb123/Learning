@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>动画属性</title>
+    <style>
+        @keyframes move {
+            0% {
+                transform: translate(0, 0);
+            }
+            100% {
+                transform: translate(1000px, 0);
+            }
+        }
+        
+        div {
+            width: 100px;
+            height: 100px;
+            background-color: pink;
+            /* animation-name: move;
+            animation-duration: 2s;
+            animation-timing-function: ease;
+            animation-delay: 2s;
+            animation-iteration-count: infinite;
+            animation-direction: alternate;
+            animation-fill-mode: forwards; */
+            animation: move 2s linear alternate forwards;
+        }
+        
+        div:hover {
+            /* 鼠标经过div 让这个div停止动画 鼠标离开就继续动画  */
+            animation-play-state: paused;
+        }
+    </style>
+</head>
+
+<body>
+    <div></div>
+</body>
+
+</html>
