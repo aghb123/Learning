@@ -1,3 +1,7 @@
+######Linux学习笔记
+
+[TOC]
+
 # Linux系统学习(Centos 8)
 
 ## 快捷键
@@ -1621,3 +1625,4 @@ Quit anyway? (y or n) y
 
 ### makefile的命名
 
+######结束

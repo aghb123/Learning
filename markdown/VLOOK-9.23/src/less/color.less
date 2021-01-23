@@ -1,0 +1,99 @@
+/**************************************
+* VLOOK CSS 调色板
+***************************************/
+
+// 纯透明色
+@transparencyColor0: fade(#FFFFFF, 0);
+@transparencyColor1: fade(#FFFFFF, 20%);
+@transparencyColor2: fade(#FFFFFF, 40%);
+@transparencyColor3: fade(#FFFFFF, 60%);
+@transparencyColor4: fade(#FFFFFF, 80%);
+
+// 文档背景色（浅色方案）
+@docBgColorLight: #FFFFFF;
+@docBgColorLightAlt: darken(@docBgColorLight, 10%);
+@docBgColorLightFade: fade(@docBgColorLight, 30%);
+// 文档背景色（深色方案）
+@docBgColorDark: #181A1E;
+@docBgColorDarkAlt: lighten(@docBgColorDark, 15%);
+@docBgColorDarkFade: fade(@docBgColorDark, 30%);
+
+// 文档前景色（浅色方案）
+@foreColorLight: #181A1E;
+@foreColorLightAlt: lighten(@foreColorLight, 40%);
+@foreColorLightFade: fade(@foreColorLight, 50%);
+@foreColorLightFade1: fade(@foreColorLight, 15%);
+@foreColorLightFade2: fade(@foreColorLight, 10%);
+@foreColorLightFade3: fade(@foreColorLight, 5%);
+// 文档前景色（深色方案）
+@foreColorDark: #E0E2E6;
+@foreColorDarkAlt: darken(@foreColorDark, 30%);
+@foreColorDarkFade: fade(@foreColorDark, 50%);
+
+// 表格（浅色方案）
+@tableColor: #B0B2B6; // 表格基础色
+@tableBorderColor: fade(@tableColor, 80%); // 表格边框
+@tableThBgColor: fade(@tableColor, 40%);
+@tableThBorderColor: @tableBorderColor;
+@tableTdBgColor: fade(@tableThBgColor, 0%); // 表格奇数行
+@tableTdBorderColor: fade(@tableBorderColor, 20%);
+@tableTdBgColor2: fade(@tableThBgColor, 10%); // 表格偶数行
+// 表格（深色方案）
+@tableColorDark: #505256; // 表格基础色
+@tableBorderColorDark: fade(@tableColorDark, 80%); // 表格边框
+@tableThBgColorDark: fade(@tableColorDark, 30%);
+@tableThBorderColorDark: @tableBorderColorDark;
+@tableTdBorderColorDark: fade(@tableBorderColorDark, 10%);
+// @tableTdBgColor2Dark: fade(@tableThBorderColorDark, 10%); // 表格偶数行
+
+// 指定在 Dark Mode 时反转的图片边框颜色（先使用反色，这样在反转时则能保持与色一致）
+@imgInvertInDarkBorderColor: rgba(255 - red(@tableBorderColorDark), 255 - green(@tableBorderColorDark), 255 - blue(@tableBorderColorDark), alpha(@tableBorderColorDark));
+
+// 强调色-1
+@accentColor1: #0972DB; //#0158D0; //#0078D7;
+@accentColor1Light: lighten(@accentColor1, 10%);
+@accentColor1Dark: darken(@accentColor1, 20%);
+@accentColor1Alt: lighten(@accentColor1, 40%);
+@accentColor1AltDark: darken(@accentColor1Alt, 40%);
+@accentColor1Fade: fade(@accentColor1, 50%);
+// @masterShadowColor: fade(@accentColor1, 35%);
+// @slaveShadowColor: fade(@accentColor4, 35%);
+// 强调色-2
+@accentColor2: #22A892; //#4AA608;
+@accentColor2Light: lighten(@accentColor2, 10%);
+@accentColor2Dark: darken(@accentColor2, 20%);
+@accentColor2Alt: lighten(@accentColor2, 40%);
+@accentColor2AltDark: darken(@accentColor2Alt, 40%);
+@accentColor2Fade: fade(@accentColor2, 50%);
+// @thirdShadowColor: lighten(@accentColor2, 35%);
+// 强调色-3
+@accentColor3: #E68D09;//#D96B0A; //E6830B; //#D96B0A; //#F28D00;
+@accentColor3Light: lighten(@accentColor3, 10%);
+@accentColor3Dark: darken(@accentColor3, 20%);
+@accentColor3Alt: lighten(@accentColor3, 40%);
+@accentColor3AltDark: darken(@accentColor3Alt, 40%);
+@accentColor3Fade: fade(@accentColor3, 50%);
+// @fourthShadowColor: lighten(@accentColor3, 35%);
+// 强调色-4
+@accentColor4: #C7285D; //#C21117; //#C3252B;//#DC0010;
+@accentColor4Light: lighten(@accentColor4, 10%);
+@accentColor4Dark: darken(@accentColor4, 20%);
+@accentColor4Alt: lighten(@accentColor4, 40%);
+@accentColor4AltDark: darken(@accentColor4Alt, 40%);
+@accentColor4Fade: fade(@accentColor4, 50%);
+// 强调色-5
+@accentColor5: #7B29CC; //#7D2A7E; //#803099;
+@accentColor5Light: lighten(@accentColor5, 10%);
+@accentColor5Dark: darken(@accentColor5, 25%);
+@accentColor5Alt: lighten(@accentColor5, 40%);
+@accentColor5AltDark: darken(@accentColor5Alt, 40%);
+@accentColor5Fade: fade(@accentColor5, 50%);
+// @fifthShadowColor: lighten(@accentColor5, 35%);
+// 强调色-6
+@accentColor6: #585A5D;
+@accentColor6Light: lighten(@accentColor6, 10%);
+@accentColor6Dark: darken(@accentColor6, 20%);
+@accentColor6Alt: lighten(@accentColor6, 40%);
+@accentColor6AltDark: darken(@accentColor6Alt, 40%);
+@accentColor6Fade: fade(@accentColor6, 50%);
+// @sixthShadowColor: lighten(@accentColor6, 35%);
