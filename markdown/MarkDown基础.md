@@ -1,5 +1,3 @@
-######MarkDown笔记
-[TOC]
 # MarkDown基础
 
 ## 标题
@@ -256,5 +254,3 @@ ___
 
 ![friedChicken](MarkDown基础.assets\timg.jfif)
 
-
-######结束
