@@ -6,18 +6,54 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>翻转盒子</title>
     <style>
+        body {
+            perspective: 300px;
+        }
+        
         .box {
+            position: relative;
             width: 300px;
             height: 300px;
             margin: 100px auto;
+            transform-style: preserve-3d;
+            transition: all .5s;
+        }
+        
+        .front,
+        .back {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            font-size: 30px;
+            color: #fff;
+            text-align: center;
+            line-height: 300px;
+        }
+        
+        .front {
+            background-color: pink;
+            z-index: 1;
+        }
+        
+        .back {
+            background-color: purple;
+            transform: rotateY(180deg);
+        }
+        
+        .box:hover {
+            /* 给盒子(整体)添加翻转 */
+            transform: rotateY(180deg);
         }
     </style>
 </head>
 
 <body>
     <div class="box">
-        <div class="front"></div>
-        <div class="back"></div>
+        <div class="front">擎天柱</div>
+        <div class="back">威震天</div>
     </div>
 </body>
 
