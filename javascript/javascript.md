@@ -82,7 +82,7 @@ JS有三种书写位置，分别为行内、内嵌和外部
 </script>
 ```
 
-​	(1)可以将多行JS代码写到<script>标签中
+​	(1)可以将多行JS代码写到`<script>`标签中
 
 ​	(2)内嵌JS是学习时常用的方式
 
@@ -356,7 +356,7 @@ console.log(typeof str); // string
 + `toString()`和`String()`使用方式不一样
 + 三种转换方式，更喜欢用第三种拼接字符串转换方式，这一种方式也称之为隐式转换
 
-#### 转换为数字型(重点)
+#### 转换为数字型(==重点==)
 
 | 方式                 | 说明                         | 案例                |
 | -------------------- | ---------------------------- | ------------------- |
@@ -708,9 +708,95 @@ console.log(a);
 //结果：9 9 9 9 9 a is not defined
 ```
 
+## 对象
 
+对象由属性和方法组成的
 
++ 属性：事物的特征，在对象中用属性来表示(常用名词)
++ 方法：事物的行为，在对象中用方法来表示(常用动词)
 
+### 创建对象的三种方式
 
++ 利用字面量创建对象
 
+对象字面量：就是花括号{}里面包含了表达这个具体事务(对象)的属性和方法。
+
+```javascript
+var obj = {
+    name: 'wz',
+    age: 23,
+    sex: 'male',
+    sayHi: function() {
+        console.log('hi~');
+    }
+}
+```
+
++ 利用`new Object`创建对象
+
+```javascript
+var obj = new Object();
+obj.name = 'wz';
+obj.age = 18;
+obj.sex = '男'；
+obj.sayHi = function() {
+    console.log('hi~');
+}
+```
+
++ 利用构造函数创建对象
+
+构造函数名字首字母要大写，构造函数不需要return 就可以返回结果，调用构造函数必须使用`new`
+
+```javascript
+function Star(name, age, sex) {
+    this.name = name;
+    this.age = age;
+    this.sex = sex;
+}
+var wz = new Star('wz', 18, 'male');
+```
+
+#### new关键字执行过程
+
+1. new 构造函数可以在内存中创建了一个空的对象
+2. this 就会指向刚才创建的空对象
+3. 执行构造函数里面的代码 给这个空对象添加属性和方法
+4. 返回这个对象
+
+### 使用对象
+
++ 使用对象的属性 采用 对象名.属性名 
++ 调用属性还可以使用 对象名['属性名']
++ 调用对象的方法 对象名.方法名()
+
+### 遍历对象属性
+
+`for ... in `语句用于对数组或者对象的属性进行循环操作(for in 里面的变量常用 k 或者 key)
+
+```javascript
+var obj = {
+    name: 'wz',
+    age: 23,
+    sex: 'male'
+}
+for (var k in obj) {
+    console.log(k); //得到属性名
+    console.log(obj[k]); //得到属性值
+}
+```
+
+## JavaScript内置对象
+
+分为三种：自定义对象、内置对象、浏览器对象
+
+前面两种对象是JS基础内容，属于ECMAScript;第三个浏览器对象属于JS独有的
+
+### MDN
+
+学习一个内置对象的使用，只要学会其常用成员的使用即可，可以通过查文档学习，可以通过MDN/W3C来查询
+
+Mozilla开发者网络(MDN)提供了有关开发网络技术(Open Web)的信息，包括HTML、CSS和万维网及HTML5应用的API
+
+MDN：(https://developer.mozilla.org/zh-CN/)
 
