@@ -1114,14 +1114,19 @@ JavaScript的DOM操作可以改变网页内容、结构和样式，可以利用D
 ##### 改变元素内容
 
 ```javascript
-
+element.innerText
 ```
 
 从起始位置到终止位置的内容，但它去除html标签，同时空格和换行也会去掉
 
 ```javascript
-
+element.innerHTML
 ```
 
 起始位置到终止位置的全部内容，包括html内容，同时保留空格和换行
 
+##### 常见元素的属性操作
+
+1. `innerText` `innerHTML` 改变元素内容
+2. `src` `href`
+3. `id` `alt`  `title` 
