@@ -1130,3 +1130,52 @@ element.innerHTML
 1. `innerText` `innerHTML` 改变元素内容
 2. `src` `href`
 3. `id` `alt`  `title` 
+
+```javascript
+/*
+      根据系统不同时间来判断，所以需要用到日期内置对象
+      利用多分支语句来设置不同的图片
+      需要一个图片，并且根据时间修改图片，就需要用到操作元素src属性
+      需要一个div元素，显示不同问候语，修改元素内容即可               
+      */
+// 1. 获取元素
+var img = document.querySelector('img');
+var div = document.querySelector('div');
+// 2. 得到当前的小时数
+var date = new Date();
+var h = date.getHours();
+// 3. 判断小时数改变图片和文字信息
+if (h < 12) {
+    img.src = 'images/s.gif';
+    div.innerHTML = '上午好';
+} else if (h < 18) {
+    img.src = 'images/x.gif';
+    div.innerHTML = '下午好'
+} else {
+    img.src = 'images/w.gif';
+    div.innerHTML = '晚上好';
+}
+```
+
+##### 表单元素的属性操作
+
+利用DOM可以操作如下表单元素的属性
+
+`type` `value` `checked` `selected` `disabled` 
+
+```javascript
+// 1. 获取元素
+var btn = document.querySelector('button');
+var input = document.querySelector('input');
+// 2. 注册事件 处理程序
+btn.onclick = function() {
+// input.innerHTML = '点击了'; //这个是普通盒子 比如div标签里的内容
+// 表单里面的值 文字内容是通过 value来修改的
+	input.value = '被点击了';
+// 如果想要某个表单被禁用 不能再点击 disabled 想要按钮 button禁用
+// btn.disabled = true;
+    this.disabled = true;
+    // this 指向的是事件函数的调用者 btn
+}
+```
+
