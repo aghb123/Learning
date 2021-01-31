@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <ul>
+        <li>abc1</li>
+        <li>abc2</li>
+        <li>abc3</li>
+        <li>abc4</li>
+        <li>abc5</li>
+    </ul>
+    <ol id="ol">
+        <li>def1</li>
+        <li>def2</li>
+        <li>def3</li>
+        <li>def4</li>
+        <li>def5</li>
+    </ol>
+
+    <script>
+        // 1. 返回的是 获取过来元素对象的集合 以伪数组的形式存储的
+        var lis = document.getElementsByTagName('li');
+        console.log(lis);
+        console.log(lis[0]);
+        // 2. 想要依次打印里面的元素对象，可以采取遍历的方式
+        for (var i = 0; i < lis.length; i++) {
+            console.log(lis[i]);
+        }
+        // 3. 如果页面中只有一个li 返回的还是伪数组的形式
+        // 4. 如果页面中没有这个元素， 返回的是空的伪数组的形式
+        // 5. element.getElementsByTagName('标签名')
+        /* var ol = document.getElementsByTagName('ol');
+        console.log(ol[0].getElementsByTagName('li')); */
+        var ol = document.getElementById('ol');
+        console.log(ol.getElementsByTagName('li'));
+    </script>
+</body>
+
+</html>

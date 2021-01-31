@@ -316,6 +316,17 @@ console.log(space + 'pink'); // nullpink
 console.log(space + 1); // 1
 ```
 
+简单数据类型`null` 返回的是一个空的对象 object
+
+```javascript
+var timer = null;
+console.log(typeof timer); // object
+```
+
+如果有个变量以后打算存储为对象，但是暂时没想好放啥，这个时候就给null
+
+
+
 ### 获取检测变量的数据类型
 
 1. `typeof`可用来获取检测变量的数据类型
@@ -575,7 +586,7 @@ function 函数名() {
 
 如果有`return` 则返回的是return后面的值 如果函数没有return 则返回undefined
 
-### `arguments`的使用
+### `arguments`的使用(==伪数组==)
 
 当不确定有多少个参数传递的时候，可以用`arguments`来获取。在JavaScript中，arguments实际上是当前函数的一个内置对象。所有函数都内置了一个arguments对象，arguments对象中存储了传递的所有实参
 
@@ -881,7 +892,7 @@ arr.sort(function(a,b) {
 
 ### 字符串对象
 
-#### 基本包装类型
+#### ==基本包装类型==
 
 为了方便操作基本数据类型，JavaScript提供了三个特殊的引用类型：`String` `Number` `Boolean` 
 
@@ -899,4 +910,218 @@ arr.sort(function(a,b) {
 | ------------------------------------ | ------------------------------------------------------------ |
 | `indexOf('要查找的字符',开始的位置)` | 返回指定内容在原字符串中的位置，如果找不到就返回-1，开始的位置是index索引号 |
 | `lastIndexOf()`                      | 从后往前找，只找第一个匹配的                                 |
+
+#### 根据位置返回字符
+
+| 方法名              | 说明                                     | 使用                          |
+| ------------------- | ---------------------------------------- | ----------------------------- |
+| `charAt(index)`     | 返回指定位置的字符(index字符串的索引号)  | str.charAt(0)                 |
+| `charCodeAt(index)` | 获取指定位置处字符的ASCII码(index索引号) | str.charCodeAt(0)             |
+| `str[index]`        | 获取指定位置处字符                       | HTML5,IE8+支持 和charAt()等效 |
+
+#### 字符串操作方法
+
+| 方法名                      | 说明                                                         |
+| --------------------------- | ------------------------------------------------------------ |
+| `concat(str1,str2,str3...)` | concat()方法用于连接两个或多个字符串。拼接字符串，等效于`+` `+`更常用 |
+| `substr(start,length)`      | 从start位置开始，length 取的个数                             |
+| `slice(start,end)`          | 从start位置开始，截取到end位置，end取不到                    |
+| `substring(start,end)`      | 从start位置开始，截取到end位置，end取不到，基本和slice相同，但是不接受负值 |
+| `toUpperCase()`             | 转换大写                                                     |
+| `toLowerCase()`             | 转换小写                                                     |
+
+## WEB APIs
+
+JS的组成
+
+<img src="javascript.assets/image-20210131191149486.png" alt="image-20210131191149486" style="zoom:80%;" />
+
++ Web APIs 是W3C组织的标准
++ Web APIs 主要学习DOM和BOM
++ Web APIs JS独有的部分
++ 学习页面交互功能
+
+### Web API
+
+Web API 是浏览器提供的一套操作浏览器功能和页面元素的API(BOM和DOM)
+
+==MDN 详细API:(https://developer.mozilla.org/zh-CN/docs/Web/API)==
+
+### DOM
+
+文档对象模型(Document Object Model，简称DOM)，是W3C组织推荐的处理可扩展标记语言(HTML或者XML)的标准变成接口
+
+W3C已经定义了一系列的DOM接口，通过这些DOM接口可以改变网页的内容、结构和样式
+
+#### DOM树
+
+<img src="javascript.assets/image-20210131192721352.png" alt="image-20210131192721352" style="zoom:80%;" />
+
++ 文档：一个页面就是一个文档，DOM中使用document表示
++ 元素：页面中所有标签都是元素，DOM中使用element表示
++ 节点：网页中的所有内容都是节点(标签、属性、文本、注释等)，DOM中使用node表示
+
+==DOM把以上内容都看做是对象==
+
+#### 获取网页元素
+
+DOM在实际开发中主要用来操作元素
+
+获取页面中的元素可以使用以下几种方式：
+
++ 根据ID获取
++ 根据标签名获取
++ 通过HTML5新增的方法获取
++ 特殊元素获取
+
+##### 根据ID获取
+
+使用`getElementById()`方法可以获取带有ID的元素对象
+
+```javascript
+// 1. 因为文档页面从上往下加载，所以先得有标签 script写到标签的下面
+// 2. 参数 id是大小写敏感的字符串
+// 3. 返回的是一个元素对象
+var timer = document.getElementById('time');
+console.log(timer);
+console.log(typeof timer);
+// 4. console.dir() 打印返回的元素对象 更好的查看里面的属性和方法
+console.dir(timer);
+```
+
+##### 根据标签名获取
+
+根据 `getElementsByTagName()` 方法可以返回带有指定标签名的对象的集合
+
+```javascript
+// 1. 返回的是 获取过来元素对象的集合 以伪数组的形式存储的
+var lis = document.getElementsByTagName('li');
+console.log(lis);
+console.log(lis[0]);
+// 2. 想要依次打印里面的元素对象，可以采取遍历的方式
+for (var i = 0; i < lis.length; i++) {
+    console.log(lis[i]);
+}
+```
+
+==注意：==
+
+1. 因为得到的是一个对象的集合，所以想要操作里面的元素就需要遍历
+2. 得到元素对象是动态的
+
+还可以获取某个元素(父元素)内部所有指定标签名的子元素
+
+```javascript
+// 5. element.getElementsByTagName('标签名')
+/* 根据标签名获取父元素
+var ol = document.getElementsByTagName('ol');
+console.log(ol[0].getElementsByTagName('li')); 
+*/
+// 根据id获取父元素
+var ol = document.getElementById('ol');
+console.log(ol.getElementsByTagName('li'));
+```
+
+==注意：父元素必须是单个对象(必须指明是哪一个元素对象)。获取的时候不包括父元素自己==
+
+##### 通过HTML5新增的方法获取
+
+1. `getElementsByClassName` 根据类名获得某些元素集合
+
+```javascript
+var boxs = document.getElementsByClassName('box');
+console.log(boxs);
+```
+
+2. `querySelector` 返回指定选择器的第一个元素对象
+
+```javascript
+var firstBox = document.querySelector('.box');
+console.log(firstBox);
+var nav = document.querySelector('#nav');
+console.log(nav);
+var li = document.querySelector('li');
+console.log(li);
+```
+
+3. querySelectorAll 返回指定选择器的所有元素对象集合
+
+```javascript
+var allBox = document.querySelectorAll('.box');
+console.log(allBox);
+```
+
+##### 获取特殊元素(body html)
+
+获取body元素
+
+```javascript
+var bodyEle = document.body;
+console.log(bodyEle);
+console.dir(bodyEle);
+```
+
+获取html元素
+
+```javascript
+var htmlEle = document.documentElement;
+console.log(htmlEle);
+```
+
+#### 事件基础
+
+JavaScript有能力创建动态页面，而事件是可以被JavaScript侦测到的行为
+
+简单理解：==触发---响应机制==
+
+网页中的每个元素都可以产生某些可以触发JavaScript的事件，例如，可以在用户点击某按钮时产生一个事件，然后去执行某些操作
+
+```javascript
+// 点击一个按钮，弹出对话框
+// 1. 事件是有三部分组成 事件源 事件类型 事件处理程序 也称为事件三要素
+//(1) 事件源 事件被触发的对象  谁 按钮
+var btn = document.getElementById('btn');
+//(2) 事件类型 如何触发 什么事件 比如鼠标点击(onclick) 还是鼠标经过 还是键盘按下
+//(3) 事件处理程序 通过一个函数赋值的方式 完成
+btn.onclick = function() {
+    alert('def');
+}
+```
+
+==执行事件的步骤==
+
+1. 获取事件源
+2. 注册事件(绑定事件)
+3. 添加事件处理程序(采取函数赋值形式)
+
+常见的鼠标事件
+
+| 鼠标事件      | 触发条件         |
+| ------------- | ---------------- |
+| `onclick`     | 鼠标点击左键触发 |
+| `onmouseover` | 鼠标经过触发     |
+| `onmouseout`  | 鼠标离开触发     |
+| `onfocus`     | 获得鼠标焦点触发 |
+| `onblur`      | 失去鼠标焦点触发 |
+| `onmousemove` | 鼠标移动触发     |
+| `onmouseup`   | 鼠标弹起触发     |
+| `onmousedown` | 鼠标按下触发     |
+
+#### 操作元素
+
+JavaScript的DOM操作可以改变网页内容、结构和样式，可以利用DOM操作来改变元素里面的内容、属性等。注意以下都是属性
+
+##### 改变元素内容
+
+```javascript
+
+```
+
+从起始位置到终止位置的内容，但它去除html标签，同时空格和换行也会去掉
+
+```javascript
+
+```
+
+起始位置到终止位置的全部内容，包括html内容，同时保留空格和换行
 

@@ -5,3 +5,8 @@ console.log(date);
 var date1 = new Date(2019, 10, 1);
 console.log(date1);
 console.log(date.getFullYear());
+var o = {
+    age: 18
+}
+console.log(o['sex']);
+console.log(o);
