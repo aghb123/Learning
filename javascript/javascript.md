@@ -1179,3 +1179,49 @@ btn.onclick = function() {
 }
 ```
 
+##### 样式属性操作
+
+可以通过JS修改元素的大小、颜色、位置等样式
+
+```javascript
+element.style //行内样式操作
+element.className //类名样式操作
+```
+
+注意：
+
+1. JS里面的样式采取驼峰命名法 
+2. JS修改style样式操作，产生的是行内样式，CSS权重比较高
+
+```javascript
+<script>
+    // 1. 获取元素
+    var lis = document.querySelectorAll('li');
+    for (var i = 0; i < lis.length; i++) {
+        var y = i * 44;
+        lis[i].style.backgroundPosition = '0 -' + y + 'px';
+    }
+</script>
+```
+
+```javascript
+<script>
+    // 1. 使用 element.style 获得修改元素样式 如果样式比较少 或者 功能简单的情况下使用
+    var test = document.querySelector('div');
+	test.onclick = function() {
+        // this.style.backgroundColor = 'purple';
+        // this.style.color = '#fff';
+        
+        // 2. 可以通过修改元素的className更改元素的样式 适合于样式较多或者功能复杂的情况
+        // this.className = 'change';
+        // 3. 如果想要保留原先的类名，可以这么做
+        this.className = 'first change';
+	}
+</script>
+```
+
+注意：
+
+1. 如果样式修改较多，可以采取操作类名方式更改元素样式
+2. class因为是个保留字，因此使用className来操作元素类名属性
+3. className 会直接更改元素的类名，会覆盖原先的类名
