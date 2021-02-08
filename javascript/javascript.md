@@ -1225,3 +1225,26 @@ element.className //类名样式操作
 1. 如果样式修改较多，可以采取操作类名方式更改元素样式
 2. class因为是个保留字，因此使用className来操作元素类名属性
 3. className 会直接更改元素的类名，会覆盖原先的类名
+
+##### 排他思想
+
+![image-20210208224048574](javascript.assets/image-20210208224048574.png)
+
+如果有同一组元素，想要某一个元素实现某种样式，需要用到循环的排他思想
+
+1. 所有元素全部清除样式
+2. 给当前元素设置样式
+3. 注意顺序不能颠倒
+
+```javascript
+var btns = document.getElementsByTagName('button');
+for (var i = 0; i < btns.length; i++) {
+    btns[i].onclick = function() {
+        for (var j = 0; j < btns.length; j++) {
+            btns[j].style.backgroundColor = '';
+        }
+        this.style.backgroundColor = 'pink';
+    }
+}
+```
+
