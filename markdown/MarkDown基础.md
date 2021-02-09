@@ -1,5 +1,18 @@
 # MarkDown基础
 
+## 快捷键
+
+| 快捷键             | 作用           |
+| ------------------ | -------------- |
+| Ctrl + 1/2/3/4/5/6 | 创建1到6级标题 |
+| Ctrl + Shift + K   | 创建代码块     |
+| Ctrl + Shift + M   | 创建数学块     |
+| Ctrl + K           | 创建链接       |
+| Ctrl + Shift + I   | 添加图片       |
+| Ctrl + /           | 源代码模式     |
+
+
+
 ## 标题
 
 标题使用#加内容书写，注意#后面要加空格，#的数量决定标题的级别
@@ -253,4 +266,48 @@ ___
 ```
 
 ![friedChicken](MarkDown基础.assets\timg.jfif)
+
+### 改变字体和颜色
+
+`<font face="黑体">我是黑体字</font>`
+
+<font face="黑体">我是黑体字</font>
+
+
+
+`<font face="微软雅黑">我是微软雅黑</font>`
+
+<font face="微软雅黑">我是微软雅黑</font>
+
+
+
+`<font color=red>我是红色</font>`
+
+<font color=red>我是红色</font>
+
+
+
+`<font color=#008000>我是绿色</font>`
+
+<font color=#008000>我是绿色</font>
+
+
+
+`<font size=5>我是5号大小</font>`
+
+<font size=5>我是5号大小</font>
+
+
+
+`<font size=5>**我是加粗5号大小**</font>`
+
+<font size=5>**我是加粗5号大小**</font>
+
+
+
+`<font face="黑体" color=green size=5>我是黑体，绿色，尺寸为5</font>`
+
+<font face="黑体" color=green size=5>我是黑体，绿色，尺寸为5</font>
+
+<font face="黑体" color=green size=5>我是黑体，绿色，尺寸为5</font>
 
