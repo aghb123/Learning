@@ -1248,3 +1248,49 @@ for (var i = 0; i < btns.length; i++) {
 }
 ```
 
+##### 自定义属性的操作
+
+1. 获取属性值
+
++ `element.属性` 获取属性值
++ `element.getAttribute('属性');` 
+
+区别：
+
++ `element.属性` 获取内置属性值(元素本身自带的属性)
++ `element.getAttribute('属性');` 主要获得自定义的属性(标准) 程序员自定义的属性2
+
+2. 设置属性值
+
++ `element.属性 = '值'` 设置内置属性值
++ `element.setAttribute('属性','值');` 
+
+区别：
+
++ `element.属性` 设置内置属性值
++ `element.setAttribute('属性');` 主要设置自定义的属性(标准)
+
+3. 移除属性
+
++ `element.removeAttribute('属性');` 
+
+```javascript
+<div id="demo" index="1"></div>
+<script>
+    var div = document.querySelector('div');
+    // 1. 获取元素的属性值
+    // (1) element.属性
+    console.log(div.id);
+    // (2) element.getAttribute('属性') 
+    console.log(div.getAttribute('id'));
+    console.log(div.getAttribute('index'));
+    // 2. 设置元素属性值
+    // (1) element.属性 = '值'
+    div.id = 'test';
+    // (2) element.setAttribute('属性','值'); 主要针对于自定义属性
+    div.setAttribute('index', 2);
+    // 3. 移除属性
+    div.removeAttribute('index');
+</script>
+```
+
