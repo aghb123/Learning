@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div>我是div</div>
+    <span>我是span</span>
+    <ul>
+        <li>我是li1</li>
+        <li>我是li2</li>
+        <li>我是li3</li>
+        <li>我是li4</li>
+    </ul>
+    <div class="box">
+        <span class="qrcode">x</span>
+    </div>
+    <script>
+        // 1. 父节点 parentNode
+        var qrcode = document.querySelector('.qrcode');
+        // var box = document.querySelector('.box');
+        // 得到的是离元素最近的父级节点 如果找不到父节点 就返回 null
+        console.log(qrcode.parentNode);
+
+        // 2. 子节点
+        var ul = document.querySelector('ul');
+        // DOM提供的方法(API)获取
+        // var lis = ul.querySelectorAll('li');
+
+        // console.log(ul.childNodes);
+        // childrenNodes 包含所有的子节点 包括元素节点 文本节点 等等
+        // for (var i = 0; i < ul.childNodes.length; i++) {
+        //     if (ul.childNodes[i].nodeType == 1) {
+        //         console.log(ul.childNodes[i]);
+        //     }
+        // }
+        // children 获取所有的子元素节点
+        // console.log(ul.children);
+
+        // 3. 第一个子节点和最后一个子节点
+        // firstChild 返回第一个子节点 不管是文本节点还是元素节点
+        console.log(ul.firstChild);
+        // firstElementChild 返回第一个子元素节点
+        console.log(ul.firstElementChild);
+        console.log(ul.lastElementChild);
+        // 实际开发的写法 既没有兼容性问题又返回第一个子元素
+        console.log(ul.children[0]);
+        console.log(ul.children[ul.children.length - 1]);
+    </script>
+</body>
+
+</html>

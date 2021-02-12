@@ -1294,5 +1294,257 @@ for (var i = 0; i < btns.length; i++) {
 </script>
 ```
 
+##### H5自定义属性
+
+自定义属性目的：是为了保存并使用数据。有些数据可以保存到页面中而不用保存到数据库中
+
+自定义属性获取是通过`getAttribute('属性')`获取
+
+但是有些自定义属性很容易引起歧义，不容易判断是元素的内置属性还是自定义属性
+
+H5新增了自定义属性：
+
+1. 设置H5自定义属性
+
+H5规定自定义属性`data-`开头作为属性名并且赋值
+
+<font color="red">比如`<div data-index = "1"></div>`</font>
+
+或者使用JS设置
+
+`element.setAttribute('data-index',2)`
+
+2. 获取H5自定义属性
+
+(1) 兼容性获取`element.getAttribute('data-index');`
+
+(2) H5新增`element.dataset.index` 或者 `element.dataset['index']` IE11 才开始支持 `dataset`是一个集合里面存放了所有以`data`开头的自定义属性
+
+注意：如果自定义属性里面有多个 - 链接的单词，获取的时候采取驼峰命名法
+
+```javascript
+<div getTime="20" data-index="1" data-list-name="andy"></div>
+<script>
+    var div = document.querySelector('div');
+    // console.log(div.getTime);
+    console.log(div.getAttribute('getTime'));
+    div.setAttribute('data-time', 20);
+    console.log(div.getAttribute('data-index'));
+    // H5新增的获取自定义属性的方法
+    console.log(div.dataset.index);
+    // 如果自定义属性里面有多个 - 链接的单词，获取的时候采取驼峰命名法
+    console.log(div.dataset.listName);
+</script>
+```
+
+#### 节点操作
+
+##### 为什么学节点操作
+
+获取元素通常使用两种方式：
+
+1. 利用DOM提供的方法获取元素
+
++ `document.getElementById()`
++ `document.getElementsByTagName()`
++ `document.querySelector`等
++ 逻辑性不强、繁琐
+
+2. 利用节点层级关系获取元素
+
++ 利用父子兄节点关系获取元素
++ 逻辑性强，但是兼容性稍差
+
+##### 节点概述
+
+网页中的所有内容都是节点(标签、属性、文本、注释等)，在DOM中，节点使用`node`来表示。
+
+HTML DOM树中的所有节点均可通过JS进行访问，所有HTML元素(节点)均可被修改，也可以创建或删除
+
+![image-20210212181320023](javascript.assets/image-20210212181320023.png)
+
+一般情况下，节点至少拥有`nodeType`(节点类型)、`nodeName`(节点名称)和`nodeValue`(节点值)这三个基本属性
+
++ 元素节点 `nodeType` 为 1
++ 属性节点 `nodeType` 为 2
++ 文本节点 `nodeType` 为 3(文本节点包含文字、空格、换行等)
+
+在实际开发中，节点操作主要操作的是元素节点
+
+##### 节点层级
+
+1. 父级节点
+
+```javascript
+node.parentNode
+```
+
+2. 子节点
+
+```javascript
+parentNode.childNodes   (标准)
+```
+
+`parentNode.childNodes`返回包含指定节点的子节点的集合，该集合为即时更新的集合
+
+注意：返回值里面包含了所有的子节点，包括元素节点、文本节点等
+
+如果只想要获得里面的元素节点，则需要专门处理，一般不提倡使用
+
+```javascript
+var ul = document.querySelector('ul');
+for (var i = 0; i < ul.childNodes.length; i++) {
+    if (ul.childNodes[i].nodeType == 1) {
+        console.log(ul.childNodes[i]);
+    }
+}
+```
 
 
+
+```javascript
+parentNode.children   (非标准)
+```
+
+`parentNode.children`是一个只读属性，返回所有的子元素节点。它只返回子元素节点，其余节点不返回(<font color=red>重点</font>)
+
+虽然children是一个非标准，但是得到了各个浏览器的支持
+
+
+
+```javascript
+parentNode.firstChild
+```
+
+`firstChild`返回第一个子节点，找不到则返回null。同样，也是包含所有的节点
+
+
+
+```javascript
+parentNode.lastChild
+```
+
+`lastChild`返回最后一个子节点，找不到则返回null。同样，也是包含所有的节点
+
+
+
+```javascript
+parent.firstElementChild
+```
+
+返回第一个子元素节点，找不到则返回null
+
+
+
+```javascript
+parent.lastElementChild
+```
+
+返回最后一个子元素节点，找不到则返回null
+
+<font color=red>注意：这两个方法有兼容性问题，IE9以上才支持</font>
+
+##### 兄弟节点
+
+```javascript
+node.nextSibling
+```
+
+返回当前元素的下一个兄弟节点，找不到则返回null。同样，也是<font color=red>包含所有的节点</font>
+
+
+
+```]
+node.previousSibling
+```
+
+返回当前元素上一个兄弟节点，找不到则返回null。同样，也是<font color=red>包含所有的节点</font>
+
+
+
+```javascript
+node.nextElementSibling
+```
+
+返回当前元素下一个兄弟元素节点，找不到则返回null。
+
+
+
+```
+node.previousElementSibling
+```
+
+返回当前元素上一个兄弟节点，找不到则返回null。
+
+<font color=red>注意：这两个方法有兼容性问题，IE9 以上才支持</font>
+
+如何解决兼容性问题？
+
+自己封装一个兼容性的函数
+
+```javascript
+function getNextElementSibling(element){
+    var el = element;
+    while(el = el.nextSibling){
+        if(el.nodeType == 1){
+            return el;
+        }
+        return null;
+    }
+}
+```
+
+##### 创建和添加节点
+
+```javascript
+document.createElement('tagName');
+```
+
+创建由tagName指定的HTML元素。因为这些元素原先不存在，是根据需求动态生成的，所以也称为<font color=red>动态创建元素节点</font>
+
+```
+node.appendChild(child)
+```
+
+将一个节点添加到指定父节点的子节点列表<font color=red>末尾</font>。类似于CSS里面的`after`伪元素
+
+```javascript
+node.insertBefore(child,指定元素)
+```
+
+将一个节点添加到父节点的指定子节点<font color=red>前面</font>。类似于CSS里面的before伪元素
+
+```javascript
+// 简单版发布留言案例
+<textarea name="" id="" cols="30" rows="10">123</textarea>
+<button>发布</button>
+<ul></ul>
+<script>
+    // 1. 获取元素
+    var btn = document.querySelector('button');
+    var text = document.querySelector('textarea');
+    var ul = document.querySelector('ul');
+    // 2. 注册事件
+    btn.onclick = function() {
+        if (text.value == '') {
+            alert('您没有输入内容');
+            return false;
+        } else {
+            // (1) 创建元素
+            var li = document.createElement('li');
+            li.innerHTML = text.value;
+            // (2) 添加元素
+            // ul.appendChild(li);
+            ul.insertBefore(li, ul.children[0]);
+        }
+	}
+</script>
+```
+
+##### 删除节点
+
+```javascript
+node.removeChild(child)
+```
+
+从DOM中删除一个子节点，返回删除的节点
