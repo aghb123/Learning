@@ -4,7 +4,7 @@ import os
 print("Please input filepath:")
 path = input()
 file1 = open(path, "r", encoding="UTF-8")
-file2 = open("E:\github\Learning\catalog.txt", "r", encoding="UTF-8")
+file2 = open(".\catalog.txt", "r", encoding="UTF-8")
 content = file1.read()
 contentadd = file2.read()
 file1.close()
