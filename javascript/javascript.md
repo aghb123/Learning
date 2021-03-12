@@ -1548,3 +1548,38 @@ node.removeChild(child)
 ```
 
 从DOM中删除一个子节点，返回删除的节点
+
+##### 复制节点
+
+```javascript
+node.cloneNode()
+```
+
+`node.cloneNode()`方法返回调用该方法的节点的一个副本。也称为克隆节点/拷贝节点
+
+<font color=red>注意:</font>
+
+1. 如果括号参数为空或者为false，则是浅拷贝，即只克隆复制节点本身，不克隆里面的子节点/内容
+2. 如果括号参数为空或者为true，则是深拷贝，会复制节点本身以及里面所有的子节点/内容
+
+##### 三种动态创建元素区别
+
++ `document.write()`
++ `element.innerHTML`
++ `document.createElement()`
+
+区别
+
+1. `document.write()`是直接将内容写入页面的内容流，但是文档流执行完毕后，再执行会导致页面全部重绘(原来的页面消失)
+2. `innerHTML`是将内容写入某个DOM节点，不会导致页面全部重绘
+3. `innerHTML`创建多个元素效率更高(不要拼接字符串，采用数组形式拼接)，结构稍微复杂
+4. `createElement()`创建多个元素效率稍低一点点，但是结构更清晰
+
+总结：不同浏览器下，`innerHTML`效率要比`createElement`高
+
+#### DOM重点核心
+
+1. 对于javascript，为了能够使javascript操作HTML，javascript就有了一套自己的DOM编程接口
+2. 对于HTML，DOM使得html形成一棵DOM树，包含 文档、元素、节点
+
+关于dom操作，我们主要针对于元素的操作。主要有创建、增、删、改、查、属性操作、事件操作
