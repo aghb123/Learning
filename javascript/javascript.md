@@ -1583,3 +1583,118 @@ node.cloneNode()
 2. 对于HTML，DOM使得html形成一棵DOM树，包含 文档、元素、节点
 
 关于dom操作，我们主要针对于元素的操作。主要有创建、增、删、改、查、属性操作、事件操作
+
+#### 事件高级
+
+##### 注册事件
+
+给元素添加事件，称为注册事件或者绑定事件
+
+注册事件有两种方式：传统方式和方法监听注册方式
+
+###### 传统注册方式
+
++ 利用`on`开头的事件，例如`onclick`
++ `<button onclick="alert('hi~')"></button>`
++ `btn.onclick=function(){}`
++ 特点：注册事件的唯一性
++ 同一个元素同一个事件只能设置一个处理函数，最后注册的处理函数将会覆盖前面注册的处理函数
+
+###### 方法监听注册方式
+
++ w3c标准推荐方式
++ `addEventListener()`是一个方法
++ IE9之前的IE不支持此方法，可使用`attachEvent()`代替
++ 特点：同一个元素同一个事件可以注册多个监听器
++ 按注册顺序依次执行
+
+###### `addEventListener`事件监听方式
+
+```javascript
+eventTarget.addEventListener(type,listener[,useCapture])
+```
+
+`eventTarget.addEventListener()`方法将指定的监听器注册到`eventTarget`(目标对象)上，当该对象触发指定的事件时，就会执行事件处理函数
+
+该方法接收三个参数：
+
++ `type`：事件类型字符串，比如`click`、`mouseover`，注意这里不需要带`on`
++ `listener`：事件处理函数，事件发生时，会调用该监听函数
++ `useCapture`：可选参数，是一个布尔值，默认是false。在DOM事件流后会进一步介绍
+
+###### `attachEvent`事件监听方式(IE9以前支持)
+
+```javascript
+eventTarget.attachEvent(eventNameWithOn,callback)
+```
+
+`eventTarget.attachEvent()`方法将指定的监听器注册到eventTarget(目标对象)上，当该对象触发指定的事件时，指定的回调函数就会被执行
+
+该方法接收两个参数：
+
++ `eventNameWithOn`：事件类型字符串，比如onclick、onmouseover，这里需要加on
++ `callback`：事件处理函数，当目标触发事件时回调函数被调用
+
+###### 注册事件兼容性解决方案
+
+```
+function addEventListener(element,eventName,fn){
+	// 判断当前浏览器是否支持addEventListener方法
+	if(element.addEventListener){
+		element.addEventListener(eventName,fn); //第三个参数 默认是false
+	}else if(element.attachEvent){
+		element.attachEvent('on' + eventName,fn);
+	}else {
+	//相当于element.onclick = fn
+		element['on' + eventName] = fn;
+	}
+}
+```
+
+兼容性处理的原则：首先照顾大多数浏览器，再处理特殊浏览器
+
+##### 删除事件(解绑事件)
+
+###### 删除事件的方式
+
+1. 传统注册方式
+
+```javascript
+eventTarget.onclick = null;
+```
+
+2. `removeEventListener` 删除事件
+
+```javascript
+eventTarget.removeEventListener('click', fn);
+```
+
+##### DOM事件流
+
+事件流描述的是从页面中接收事件的顺序
+
+事件发生时会在元素节点之间按照特定的顺序传播，这个传播过程即DOM事件流
+
+给一个div注册点击事件
+
+DOM事件流分为3个阶段：
+
+1.捕获阶段
+
+2.当前目标阶段
+
+3.冒泡阶段
+
++ 事件冒泡：IE最早提出，事件开始时由最具体的元素接收，然后逐级向上传播到DOM最顶层节点的过程
++ 事件捕获：网景最早提出，由DOM最顶层节点开始，然后逐级向下传播到最具体的元素接收的过程
+
+![image-20210317213821466](javascript.assets/image-20210317213821466.png)
+
+注意：
+
+1. JS代码只能执行捕获或者冒泡其中的一个阶段
+2. onclick和attachEvent只能得到冒泡阶段
+3. `addEventListenser(type,listener[,useCapture])`第三个参数如果是true，表示在事件捕获阶段调用事件处理程序；如果是false(不写默认就是false)，表示在事件冒泡阶段调用事件处理程序
+4. 实际开发中，很少使用事件捕获，更关注事件冒泡
+5. 有些事件是没有冒泡的，比如onblur、onfocus、onmouseenter、onmouseleave
+6. 事件冒泡有时候会带来麻烦，有时候又可以很巧妙的处理某些事件
