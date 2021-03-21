@@ -344,7 +344,7 @@ To https://github.com/aghb123/Learning.git
 find . -name ".git" | xargs rm -Rf
 ```
 
-检验是否成功删除了本地仓库：在Gitbash中进入仓库的目录中，如果目录末尾没有"(master)"，说明成功删除了本地仓库
+检验是否成功删除了本地仓库：在Git bash中进入仓库的目录中，如果目录末尾没有"(master)"，说明成功删除了本地仓库
 
 ```
 WZ@DESKTOP-8SQ1L5C MINGW64 /g/github/demo (master)

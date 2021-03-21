@@ -1698,3 +1698,158 @@ DOM事件流分为3个阶段：
 4. 实际开发中，很少使用事件捕获，更关注事件冒泡
 5. 有些事件是没有冒泡的，比如onblur、onfocus、onmouseenter、onmouseleave
 6. 事件冒泡有时候会带来麻烦，有时候又可以很巧妙的处理某些事件
+
+##### 事件对象
+
+```javascript
+eventTarget.onclick = function(event) {}
+eventTarget.addEventListener('click',function(event){})
+```
+
+官方解释：event对象代表事件的状态，比如键盘按键的状态、鼠标的位置、鼠标按钮的状态。
+
+简单解释：事件发生后，跟事件相关的一系列信息数据的集合都放到这个对象里面，这个对象就是事件对象event，它有很多属性和方法。
+
+比如：
+
+1. 谁绑定了这个事件
+2. 鼠标触发事件的话，会得到鼠标的相关信息，如鼠标位置
+
+注意:
+
+event是个形参，系统帮我们设定为事件对象，不需要传递实参过去。
+
+当我们注册事件时，event对象就会被系统自动创建，并依次传递给事件监听器(事件处理函数)
+
+事件对象本身的获取存在兼容问题
+
+1.标准浏览器中是浏览器给方法传递的参数，只需要定义形参event就可以获取到
+
+2.在浏览器IE6~8中，浏览器不会给方法传递参数，如果需要的话，需要到window.event中获取查找
+
+解决：`e = e || window.event;`
+
+###### 事件对象的常见属性和方法
+
+| 事件对象属性方法      | 说明                                                         |
+| --------------------- | ------------------------------------------------------------ |
+| `e.target`            | 返回触发事件的对象 标准                                      |
+| `e.srcElement`        | 返回触发事件的对象 非标准IE6~8使用                           |
+| `e.type`              | 返回事件的类型 比如click mouseover 不带on                    |
+| `e.cancelBubble`      | 该属性阻止冒泡 非标准 IE6~8使用                              |
+| `e.returnValue`       | 该属性 阻止默认事件(默认行为) 非标准 IE6~8使用 比如不让链接跳转 |
+| `e.preventDefault()`  | 该方法 阻止默认事件(默认行为) 比如不让链接跳转               |
+| `e.stopPropagation()` | 阻止冒泡 标准                                                |
+
+##### 阻止事件冒泡
+
+两种方式
+
+事件冒泡：开始时由最具体的元素接收，然后逐级向上传播到DOM最顶层节点
+
+事件冒泡本身的特性，会带来的坏处，也会带来的好处，需要灵活掌握
+
+<font color=red>阻止事件冒泡</font>
+
++ 标准写法：利用事件对象里面的`stopPropagation()`方法
+
+```javascript
+e.stopPropagation();
+```
+
++ 非标准写法：IE6~8 利用事件对象`cancelBubble`属性
+
+```javascript
+if(e &&if (e && e.stopPropagation()) {
+	e.stopPropagation();
+} else {
+	window.event.cancelBubble = true;
+});
+```
+
+##### 事件委托(代理、委派)
+
+事件冒泡本身的特性，会带来的坏处，也会带来的好处，需要灵活掌握。程序中有如下场景：
+
+```javascript
+<ul>
+    <li>abc</li>
+    <li>abc</li>
+    <li>abc</li>
+    <li>abc</li>
+    <li>abc</li>
+    <li>abc</li>
+</ul>
+```
+
+点击每个li都会弹出对话框，以前需要给每个li注册事件，是非常辛苦的，而且访问DOM的次数越多，这就会延长整个页面的交互就绪时间
+
+<font size=4>事件委托</font>
+
+事件委托也称为事件代理，在jQuery里面称为事件委派
+
+<font color=red size=4>事件委托的原理</font>
+
+<font color=red>不是每个子节点单独设置事件监听器，而是事件监听器设置在其父节点上，然后利用冒泡原理影响设置每个子节点</font>
+
+以上案例：给ul注册点击事件，然后利用事件对象的target来找到当前点击的li，因为点击li，事件会冒泡到ul上，ul有注册事件，就会触发事件监听器
+
+事件委托的作用：只操作了一次DOM，提高了程序的性能
+
+##### 常用的鼠标事件
+
+| 鼠标事件      | 触发条件         |
+| ------------- | ---------------- |
+| `onclick`     | 鼠标点击左键触发 |
+| `onmouseover` | 鼠标经过触发     |
+| `onmouseout`  | 鼠标离开触发     |
+| `onfocus`     | 获得鼠标焦点触发 |
+| `onblur`      | 失去鼠标焦点触发 |
+| `onmousemove` | 鼠标移动触发     |
+| `onmouseup`   | 鼠标弹起触发     |
+| `onmousedown` | 鼠标按下触发     |
+
+###### 常见的鼠标事件
+
+1.禁止鼠标右键菜单
+
+contextmenu主要控制应该何时显示上下文菜单，主要用于程序员取消默认的上下文菜单
+
+```javascript
+ document.addEventListener('contextmenu', function(e) {
+ 	e.preventDefault();
+ })
+```
+
+2.禁止鼠标选中(selectstart 开始选中)
+
+```javascript
+document.addEventListener('selectstart', function(e) {
+	e.preventDefault();
+})
+```
+
+###### 鼠标事件对象
+
+event对象代表事件的状态，跟事件相关的一系列信息的集合。现阶段主要用鼠标事件对象
+
+MouseEvent和键盘事件对象KeyboardEvent
+
+| 鼠标事件对象 | 说明                                   |
+| ------------ | -------------------------------------- |
+| `e.clientX`  | 返回鼠标相对于浏览器窗口可视区的X坐标  |
+| `e.clientY`  | 返回鼠标相对于浏览器窗口可视区的Y坐标  |
+| `e.pageX`    | 返回鼠标相对于文档页面的X坐标 IE9+支持 |
+| `e.pageY`    | 返回鼠标相对于文档页面的Y坐标 IE9+支持 |
+| `e.screenX`  | 返回鼠标相对于电脑屏幕的X坐标          |
+| `e.screenY`  | 返回鼠标相对于电脑屏幕的Y坐标          |
+
+###### 案例分析
+
+1.鼠标不断地移动，使用鼠标移动事件：mousemove
+
+2.在页面中移动，给document注册事件
+
+3.图片要移动距离，而且不占位置，使用绝对定位即可
+
+4.核心原理：每次移动鼠标，都会获得最新地鼠标坐标，把这个x和y坐标作为图片的top和left值就可以移动图片
