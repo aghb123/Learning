@@ -1853,3 +1853,163 @@ MouseEvent和键盘事件对象KeyboardEvent
 3.图片要移动距离，而且不占位置，使用绝对定位即可
 
 4.核心原理：每次移动鼠标，都会获得最新地鼠标坐标，把这个x和y坐标作为图片的top和left值就可以移动图片
+
+##### 常用的键盘事件
+
+事件除了使用鼠标触发，还可以使用键盘触发
+
+| 键盘事件     | 触发条件                                                     |
+| ------------ | ------------------------------------------------------------ |
+| `onkeyup`    | 某个键盘按键被松开时触发                                     |
+| `onkeydown`  | 某个键盘按键被按下时触发                                     |
+| `onkeypress` | 某个键盘按键被按下时 触发 但是它不识别功能键 比如 ctrl shift 箭头等 |
+
+三个事件的执行顺序： keydown :arrow_right: keypress :arrow_right: keyup
+
+###### 键盘事件对象
+
+| 键盘事件对象属性 | 说明                |
+| ---------------- | ------------------- |
+| `keyCode`        | 返回该键的ASCII码值 |
+
+<font color=red>注意：onkeydown和onkeyup不区分字母大小写，onkeypress区分字母大小写</font>
+
+<font color=red>在实际开发中，更多的使用keydown和keyup，它们能识别所有的键(包括功能键)</font>
+
+<font color=red>keypress不识别功能键，但是keyCode属性能区分大小写，返回不同的ASCII码值</font>
+
+<font color=red>keydown和keypress在文本框中的特点：它们两个事件触发的时候，文字还没有落入文本框中</font>
+
+### BOM
+
+#### BOM概述
+
+BOM(Browser Object Model)即浏览器对象模型，它提供了独立于内容而与浏览器窗口进行交互的对象，其核心对象是window
+
+BOM由一系列相关的对象构成，并且每个对象都提供了很多方法与属性
+
+<table style="margin-left: auto; margin-right: auto;">
+    <tr>
+        <td>
+            DOM
+            文档对象模型
+            DOM就是把文档当作一个对象来看待
+            DOM的顶级对象是document
+            DOM主要学习的是操作页面元素
+            DOM是W3C标准规范
+        </td>
+        <td>
+            BOM
+            浏览器对象模型
+            把浏览器当作一个对象来看待
+            BOM的顶级对象是window
+            BOM学习的是浏览器窗口交互的一些对象
+            BOM是浏览器厂商在各自浏览器上定义的，兼容性较差
+        </td>
+    </tr>
+</table>
+
+#### BOM的构成
+
+window对象是浏览器的顶级对象，它具有双重角色
+
+1. 它是JS访问浏览器窗口的一个接口
+2. 它是一个全局对象。定义在全局作用域中的变量、函数都会变成window对象的属性和方法。在调用的时候可以省略window，前面学习的对话框都属于window对象方法，如alert()、prompt()等
+
+注意：window下的一个特殊属性window.name
+
+#### window对象的常见事件
+
+##### 窗口加载事件
+
+```javascript
+window.onload = function(){};
+window.addEventListener('load',function(){});
+```
+
+window.onload是窗口(页面)加载事件，当文档内容完全加载完成会触发该事件(包括图像、脚本文件、CSS文件等)，就调用的处理函数
+
+注意：
+
+1. 有了window.onload就可以把JS代码写到页面元素的上方，因为onload是等页面内容全部加载完毕，再去执行处理函数
+
+2. window.onload传统注册事件方式只能写一次，如果有多个，会以最后一个window.onload为准
+
+3. 如果使用addEventListener则没有限制
+
+4. ```javascript
+   document.addEventListener('DOMContentLoaded',function(){})
+   ```
+
+   DOMContentLoaded事件触发时，仅当DOM加载完成，不包括样式表、图片、flash等等。IE9以上才支持。如果页面的图片很多的话，从用户访问到onload触发可能需要较长的时间。交互效果就不能实现，必然影响用户的体验，此时用DOMContentLoaded事件比较合适
+
+注意：
+
+load 等页面内容全部加载完毕，包含页面dom元素 图片 flash css等等
+
+DOMContentLoaded是DOM加载完毕，不包含图片 flash css等就可以执行 加载速度比load更快一些
+
+##### 调整窗口大小事件
+
+```javascript
+window.onresize = function(){}
+window.addEventListener('resize',function(){})
+```
+
+window.onresize是调整窗口大小加载事件，当触发时就调用的处理函数
+
+注意：
+
+1. 只要窗口大小发生像素变化，就会触发这个事件
+2. 经常利用这个事件完成响应式布局。window.innerWidth当前屏幕的宽度
+
+##### 定时器
+
+###### 两种定时器
+
+window对象提供了2个非常好用的方法-定时器
+
++ `setTimeout()`
++ `setInterval()`
+
+###### setTimeout()定时器
+
+```javascript
+window.setTimeout(调用函数，[延迟的毫秒数]);
+```
+
+setTimeout()方法用于设置一个定时器，该定时器在定时器到期后执行调用函数
+
+注意：
+
+1. window可以省略
+2. 这个调用函数可以直接写函数，或者写函数名或者采取字符串'函数名()'三种形式。第三种不推荐
+3. 延迟的毫秒数省略默认是0，如果写，必须是毫秒
+4. 因为定时器可能有很多，所以经常给定时器赋值一个标识符
+
+setTimeout()里的调用函数也称为回调函数`callback`
+
+普通函数是按照代码顺序直接调用，而这个函数，需要等待时间，时间到了才去调用这个函数，因此称为回调函数
+
+简单理解：回调，就是回头调用的意思。上一件事干完，再回头再调用这个函数。
+
+以前所说的`element.onclick = function(){}`或者`element.addEventListener('click',fn);`里面的函数也是回调函数
+
+###### 停止setTimeout()定时器
+
+```javascript
+window.clearTimeout(timeoutID);
+```
+
+注意：
+
+1. window可以省略
+2. 里面的参数就是定时器的标识符
+
+###### setInterval()定时器
+
+```javascript
+window.setInterval(回调函数，[间隔的毫秒数]);
+```
+
+setInterval()方法重复调用一个函数，每隔这个时间，就去调用一次回调函数。
