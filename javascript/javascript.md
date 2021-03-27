@@ -1920,7 +1920,7 @@ window对象是浏览器的顶级对象，它具有双重角色
 
 #### window对象的常见事件
 
-##### 窗口加载事件
+##### 窗口加载事件(load,pageshow,DOMContentLoaded)
 
 ```javascript
 window.onload = function(){};
@@ -1928,6 +1928,18 @@ window.addEventListener('load',function(){});
 ```
 
 window.onload是窗口(页面)加载事件，当文档内容完全加载完成会触发该事件(包括图像、脚本文件、CSS文件等)，就调用的处理函数
+
+下面三种情况都会刷新页面都会触发load事件
+
+1. a标签的超链接
+2. F5或者刷新按钮(强制刷新)
+3. 前进后退按钮
+
+但是火狐中，有个特点，有个"往返缓存"，这个缓存中不仅保存着页面数据，还保存了DOM和JavaScript的状态；实际上是将整个页面都保存在了内存里
+
+所以此时后退按钮不能刷新页面
+
+此时可以使用pageshow事件来触发。这个事件在页面显示时触发，无论页面是否来自缓存。在重新加载页面中，pageshow会在load事件触发后触发；根据事件对象中的persisted来判断是否是缓存中的页面触发的pageshow事件，注意这个事件给window添加。e.persisted返回的是true 就是说这个页面是从缓存取过来的页面
 
 注意：
 
@@ -1949,7 +1961,7 @@ load 等页面内容全部加载完毕，包含页面dom元素 图片 flash css�
 
 DOMContentLoaded是DOM加载完毕，不包含图片 flash css等就可以执行 加载速度比load更快一些
 
-##### 调整窗口大小事件
+##### 调整窗口大小事件resize
 
 ```javascript
 window.onresize = function(){}
@@ -2197,3 +2209,36 @@ style
 + style.width是可读写属性，可以获取也可以赋值
 + <font color=red>所以，想要给元素更改值，则需要用style改变</font>
 
+#### 元素可视区client系列
+
+client翻译过来就是客户端，使用client系列的相关属性来获取元素可视区的相关信息。通过client系列的相关属性可以动态的得到该元素的边框大小、元素大小等。
+
+| client系列属性       | 作用                                                         |
+| -------------------- | ------------------------------------------------------------ |
+| element.clientTop    | 返回元素上边框的大小                                         |
+| element.clientLeft   | 返回元素左边框的大小                                         |
+| element.clientWidth  | 返回自身包括padding、内容区的宽度，不含边框，返回数值不带单位 |
+| element.clientHeight | 返回自身包括padding、内容区的高度、不含边框，返回数值不带单位 |
+
+##### 淘宝flexible.js源码分析
+
+立即执行函数(function(){})()
+
+主要作用：创建一个独立的作用域。
+
+#### 元素滚动scroll系列属性
+
+##### 元素scroll系列属性
+
+scroll翻译过来就是滚动的，使用scroll系列的相关属性可以动态的得到该元素的大小、滚动距离等。
+
+| scroll系列属性       | 作用                                           |
+| -------------------- | ---------------------------------------------- |
+| element.scrollTop    | 返回被卷去的上侧距离，返回数值不带单位         |
+| element.scrollLeft   | 返回被卷去的左侧距离，返回数值不带单位         |
+| element.scrollWidth  | 返回自身实际的宽度，不含边框，返回数值不带单位 |
+| element.scrollHeight | 返回自身实际的高度，不含边框，返回数值不带单位 |
+
+##### 页面被卷去的头部
+
+如果浏览器的高(或宽)度不足以显示整个页面时，会自动出现滚动条。当滚动条向下滚动时，页面上面被隐藏掉的高度，称为页面被卷去的头部。滚动条在滚动时会触发onscroll事件。

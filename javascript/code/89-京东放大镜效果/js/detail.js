@@ -46,7 +46,6 @@ window.addEventListener('load', function() {
         var bigY = maskY * bigMax / maskMax;
         bigIMg.style.left = -bigX + 'px';
         bigIMg.style.top = -bigY + 'px';
-
     });
 
 })
