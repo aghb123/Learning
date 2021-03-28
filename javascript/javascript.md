@@ -2242,3 +2242,86 @@ scroll翻译过来就是滚动的，使用scroll系列的相关属性可以动�
 ##### 页面被卷去的头部
 
 如果浏览器的高(或宽)度不足以显示整个页面时，会自动出现滚动条。当滚动条向下滚动时，页面上面被隐藏掉的高度，称为页面被卷去的头部。滚动条在滚动时会触发onscroll事件。
+
+需要注意的是，页面被卷去的头部，有兼容性问题，因此被卷去的头部通常有如下几种写法：
+
+1. 声明了DTD(`<!DOCTYPE html>`)，使用document.documentElement.scrollTop
+2. 未声明DTD，使用document.body.scrollTop
+3. 新方法window.pageYOffset和window.pageXOffset，IE9开始支持
+
+兼容性解决方案
+
+```javascript
+function getScroll() {
+            return {
+                left: window.pageXOffset || document.documentElement.scrollLeft || document.body.scrollLeft || 0,
+                top: window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0,
+            }
+        }
+```
+
+使用的时候：`getScroll().left`
+
+#### 三大系列总结
+
+| 三大系列大小对比    | 作用                                                         |
+| ------------------- | ------------------------------------------------------------ |
+| element.offsetWidth | 返回自身包括padding、边框、内容区的宽度，返回数值不带单位    |
+| element.clientWidth | 返回自身包括padding、内容区的宽度，不含边框，返回数值不带单位 |
+| element.scrollWidth | 返回自身实际的宽度，不含边框，返回数值不带单位               |
+
+它们主要用法：
+
+1. offset系列主要用于获得元素位置 offsetLeft offsetTop
+2. client经常用于获取元素大小 clientWidth clientHeight
+3. scroll经常用于获取滚动距离 scrollTop scrollLeft
+4. 注意页面滚动的距离通过window.pageXOffset获得
+
+#### mouseenter和mouseover的区别
+
++ 当鼠标移动到元素上时就会触发mouseenter事件
++ 类似mouseover，它们两者之间的差别是mouseover鼠标经过自身盒子会触发，经过子盒子还会触发。mouseenter只会经过自身盒子触发
++ 产生上述现象的原因是因为mouseenter不会冒泡
++ 跟mouseenter搭配 鼠标离开mouseleave 同样不会冒泡
+
+#### 动画函数封装
+
+##### 动画实现原理
+
+核心原理：通过定时器setInterval()不断移动盒子位置
+
+实现步骤：
+
+1. 获得盒子当前位置
+2. 让盒子在当前位置加上1个移动距离
+3. 利用定时器不断重复这个操作
+4. 加一个结束定时器的条件
+5. 注意此元素需要添加定位，才能使用element.style.left
+
+##### 动画函数简单封装
+
+注意函数需要传递2个参数，动画对象和移动到的距离 
+
+```javascript
+// 简单动画函数封装 obj 目标对象 target 目标位置
+function animate(obj, target) {
+    var timer = setInterval(function() {
+        if (obj.offsetLeft >= target) {
+            //停止动画 本质是停止计时器
+            clearInterval(timer);
+        }
+        obj.style.left = obj.offsetLeft + 2 + 'px';
+    }, 30);
+};
+var div = document.querySelector('div');
+var span = document.querySelector('span');
+// 调用函数
+animate(div, 300);
+animate(span, 200);
+```
+
+##### 动画函数给不同元素记录不同定时器
+
+如果多个元素都使用这个动画函数，每次都要var声明定时器。可以给不同的元素使用不同的定时器(各自用各自的定时器)。
+
+核心原理：利用JS是一门动态语言，可以很方便的给当前对象添加属性
