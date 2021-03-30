@@ -401,3 +401,18 @@ To https://github.com/aghb123/Learning.git
 ```
 
 本地仓库未与远程仓库同步(也就是远程仓库所作的改变本地仓库没有跟进)，此时推送会失败，`git pull`之后再`git push`即可，注意先后顺序即可
+
+### 本地仓库关联多个远程仓库
+
+```
+git remote add wz https://gitee.com/aghb123/Learning.git
+```
+
+wz为远程库名
+
+提交代码
+
+```
+git push wz main
+```
+
