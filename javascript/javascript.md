@@ -1622,6 +1622,10 @@ eventTarget.addEventListener(type,listener[,useCapture])
 + `listener`：事件处理函数，事件发生时，会调用该监听函数
 + `useCapture`：可选参数，是一个布尔值，默认是false。在DOM事件流后会进一步介绍
 
+```javascript
+sliderbar.addEventListener('mouseover', animate(con, -160)); //无法使用，因为相当于直接传入animate(con,-160)的返回值
+```
+
 ###### `attachEvent`事件监听方式(IE9以前支持)
 
 ```javascript
@@ -1920,7 +1924,7 @@ window对象是浏览器的顶级对象，它具有双重角色
 
 #### window对象的常见事件
 
-##### 窗口加载事件
+##### 窗口加载事件(load,pageshow,DOMContentLoaded)
 
 ```javascript
 window.onload = function(){};
@@ -1928,6 +1932,18 @@ window.addEventListener('load',function(){});
 ```
 
 window.onload是窗口(页面)加载事件，当文档内容完全加载完成会触发该事件(包括图像、脚本文件、CSS文件等)，就调用的处理函数
+
+下面三种情况都会刷新页面都会触发load事件
+
+1. a标签的超链接
+2. F5或者刷新按钮(强制刷新)
+3. 前进后退按钮
+
+但是火狐中，有个特点，有个"往返缓存"，这个缓存中不仅保存着页面数据，还保存了DOM和JavaScript的状态；实际上是将整个页面都保存在了内存里
+
+所以此时后退按钮不能刷新页面
+
+此时可以使用pageshow事件来触发。这个事件在页面显示时触发，无论页面是否来自缓存。在重新加载页面中，pageshow会在load事件触发后触发；根据事件对象中的persisted来判断是否是缓存中的页面触发的pageshow事件，注意这个事件给window添加。e.persisted返回的是true 就是说这个页面是从缓存取过来的页面
 
 注意：
 
@@ -1949,7 +1965,7 @@ load 等页面内容全部加载完毕，包含页面dom元素 图片 flash css�
 
 DOMContentLoaded是DOM加载完毕，不包含图片 flash css等就可以执行 加载速度比load更快一些
 
-##### 调整窗口大小事件
+##### 调整窗口大小事件resize
 
 ```javascript
 window.onresize = function(){}
@@ -2179,3 +2195,316 @@ offset系列常用属性
 | element.offsetWidth  | 返回自身包括padding、边框、内容区的宽度，返回数值不带单位    |
 | element.offsetHeight | 返回自身包括padding、边框、内容区的高度，返回数值不带单位    |
 
+##### offset与style区别
+
+offset
+
++ offset可以得到任意样式表中的样式值
++ offset系列获得的数值是没有单位的
++ offsetWidth包含padding+border+width
++ offsetWidth等属性是只读属性，只能获取不能赋值
++ <font color=red>所以，想要获取元素大小位置，用offset更合适</font>
+
+style
+
++ style只能得到行内样式表中的样式值
++ style.width获得的是带有单位的字符串
++ style.width获得不包含padding和border的值
++ style.width是可读写属性，可以获取也可以赋值
++ <font color=red>所以，想要给元素更改值，则需要用style改变</font>
+
+#### 元素可视区client系列
+
+client翻译过来就是客户端，使用client系列的相关属性来获取元素可视区的相关信息。通过client系列的相关属性可以动态的得到该元素的边框大小、元素大小等。
+
+| client系列属性       | 作用                                                         |
+| -------------------- | ------------------------------------------------------------ |
+| element.clientTop    | 返回元素上边框的大小                                         |
+| element.clientLeft   | 返回元素左边框的大小                                         |
+| element.clientWidth  | 返回自身包括padding、内容区的宽度，不含边框，返回数值不带单位 |
+| element.clientHeight | 返回自身包括padding、内容区的高度、不含边框，返回数值不带单位 |
+
+##### 淘宝flexible.js源码分析
+
+立即执行函数(function(){})()
+
+主要作用：创建一个独立的作用域。
+
+#### 元素滚动scroll系列属性
+
+##### 元素scroll系列属性
+
+scroll翻译过来就是滚动的，使用scroll系列的相关属性可以动态的得到该元素的大小、滚动距离等。
+
+| scroll系列属性       | 作用                                           |
+| -------------------- | ---------------------------------------------- |
+| element.scrollTop    | 返回被卷去的上侧距离，返回数值不带单位         |
+| element.scrollLeft   | 返回被卷去的左侧距离，返回数值不带单位         |
+| element.scrollWidth  | 返回自身实际的宽度，不含边框，返回数值不带单位 |
+| element.scrollHeight | 返回自身实际的高度，不含边框，返回数值不带单位 |
+
+##### 页面被卷去的头部
+
+如果浏览器的高(或宽)度不足以显示整个页面时，会自动出现滚动条。当滚动条向下滚动时，页面上面被隐藏掉的高度，称为页面被卷去的头部。滚动条在滚动时会触发onscroll事件。
+
+需要注意的是，页面被卷去的头部，有兼容性问题，因此被卷去的头部通常有如下几种写法：
+
+1. 声明了DTD(`<!DOCTYPE html>`)，使用document.documentElement.scrollTop
+2. 未声明DTD，使用document.body.scrollTop
+3. 新方法window.pageYOffset和window.pageXOffset，IE9开始支持
+
+兼容性解决方案
+
+```javascript
+function getScroll() {
+            return {
+                left: window.pageXOffset || document.documentElement.scrollLeft || document.body.scrollLeft || 0,
+                top: window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0,
+            }
+        }
+```
+
+使用的时候：`getScroll().left`
+
+#### 三大系列总结
+
+| 三大系列大小对比    | 作用                                                         |
+| ------------------- | ------------------------------------------------------------ |
+| element.offsetWidth | 返回自身包括padding、边框、内容区的宽度，返回数值不带单位    |
+| element.clientWidth | 返回自身包括padding、内容区的宽度，不含边框，返回数值不带单位 |
+| element.scrollWidth | 返回自身实际的宽度，不含边框，返回数值不带单位               |
+
+它们主要用法：
+
+1. offset系列主要用于获得元素位置 offsetLeft offsetTop
+2. client经常用于获取元素大小 clientWidth clientHeight
+3. scroll经常用于获取滚动距离 scrollTop scrollLeft
+4. 注意页面滚动的距离通过window.pageXOffset获得
+
+#### mouseenter和mouseover的区别
+
++ 当鼠标移动到元素上时就会触发mouseenter事件
++ 类似mouseover，它们两者之间的差别是mouseover鼠标经过自身盒子会触发，经过子盒子还会触发。mouseenter只会经过自身盒子触发
++ 产生上述现象的原因是因为mouseenter不会冒泡
++ 跟mouseenter搭配 鼠标离开mouseleave 同样不会冒泡
+
+#### 动画函数封装
+
+##### 动画实现原理
+
+核心原理：通过定时器setInterval()不断移动盒子位置
+
+实现步骤：
+
+1. 获得盒子当前位置
+2. 让盒子在当前位置加上1个移动距离
+3. 利用定时器不断重复这个操作
+4. 加一个结束定时器的条件
+5. 注意此元素需要添加定位，才能使用element.style.left
+
+##### 动画函数简单封装
+
+注意函数需要传递2个参数，动画对象和移动到的距离 
+
+```javascript
+// 简单动画函数封装 obj 目标对象 target 目标位置
+function animate(obj, target) {
+    var timer = setInterval(function() {
+        if (obj.offsetLeft >= target) {
+            //停止动画 本质是停止计时器
+            clearInterval(timer);
+        }
+        obj.style.left = obj.offsetLeft + 2 + 'px';
+    }, 30);
+};
+var div = document.querySelector('div');
+var span = document.querySelector('span');
+// 调用函数
+animate(div, 300);
+animate(span, 200);
+```
+
+##### 动画函数给不同元素记录不同定时器
+
+如果多个元素都使用这个动画函数，每次都要var声明定时器。可以给不同的元素使用不同的定时器(各自用各自的定时器)。
+
+核心原理：利用JS是一门动态语言，可以很方便的给当前对象添加属性
+
+##### 缓动效果原理
+
+缓动动画就是让元素运动速度有所变化，最常见的是让速度慢慢停下来
+
+思路：
+
+1. 让盒子每次移动的距离慢慢变小，速度就会慢慢落下来
+2. 核心算法：(目标值-现在的位置)/10 作为每次移动的距离步长
+3. 停止的条件是:让当前盒子位置等于目标位置就停止计时器
+4. 注意步长值需要取整
+
+##### 动画函数在多个目标值之间移动
+
+可以让动画函数从800移动到500
+
+当点击按钮的时候，判断步长是正值还是负值
+
+1. 如果是正值，则步长往大了取整
+2. 如果是负值，则步长向小了取整
+
+##### 动画函数添加回调函数
+
+回调函数原理：函数作为一个参数。将这个函数作为参数传到另一个函数里面，当那个函数执行完之后，再执行传进去的这个函数，这个过程就叫做回调。
+
+回调函数写的位置：定时器结束的位置。
+
+##### 动画函数封装到单独JS文件里面
+
+因为以后经常使用这个动画函数，可以单独封装到一个JS文件里面，使用的时候引用这个JS文件即可。
+
+#### 常见网页特效案例
+
+##### 网页轮播图
+
+轮播图也称为焦点图，是网页中比较常见的网页特效。
+
+功能需求：
+
+1. 鼠标经过轮播图模块，左右按钮显示，离开隐藏左右按钮
+2. 点击右侧按钮一次，图片往左播放一张，以此类推，左侧按钮同理
+3. 图片播放的同时，下面小圆圈模块跟随一起变化
+4. 点击小圆圈，可以播放相应图片
+5. 鼠标不经过轮播图，轮播图也会自动播放图片
+6. 鼠标经过，轮播图模块，自动播放停止
+
+因为JS较多，单独新建js文件夹，再新建js文件，引入页面中；此时需要添加load事件；
+
+鼠标经过轮播图模块，左右按钮显示，离开隐藏左右按钮。
+
+<font color=red>动态生成小圆圈</font>
+
+核心思路：小圆圈的个数要跟图片张数一致
+
+所以首先先得到ul里面图片的张数(图片放入li里面，所以就是li的个数)
+
+利用循环动态生成小圆圈(这个小圆圈要放入ol里面)
+
+创建节点createElement('li')
+
+插入节点ol.appendChild(li)
+
+第一个小圆圈需要添加current类
+
+<font color=red>小圆圈的排它思想</font>
+
+点击当前小圆圈，就添加current类
+
+其余的小圆圈就移除这个current类
+
+注意：在生成小圆圈的同时，就可以直接绑定这个点击事件了
+
+<font color=red>点击小圆圈滚动图片</font>
+
+此时用到animate动画函数，将js文件引入(注意，因为index.js依赖animate.js 所以animate.js要写到index.js上面)
+
+使用动画函数的前提，该元素必须有定位
+
+注意是ul移动，不是小li在动
+
+滚动图片的核心算法：点击某个小圆圈，就让图片滚动 小圆圈的索引号乘以图片的宽度作为ul移动距离
+
+此时需要知道小圆圈的索引号，可以在生成小圆圈的时候，给它设置一个自定义属性，点击的时候获取这个自定义属性即可
+
+<font color=red>点击右侧按钮一次，就让图片滚动一张</font>
+
+声明一个变量num，点击一次，自增1，让这个变量乘以图片宽度，就是ul的滚动距离
+
+图片无缝滚动原理
+
+当图片滚动到克隆的最后一张图片时，让ul快速的、不做动画的跳到最左侧：left为0
+
+<font color=red>克隆第一张图片</font>
+
+克隆ul第一个li cloneNode() 加true深克隆 复制里面的子节点 false浅克隆
+
+添加到ul最后面 appendChild
+
+<font color=red>点击右侧按钮，小圆圈跟随变化</font>
+
+最简单的做法是再声明一个变量circle，每次点击自增1，注意，左侧按钮也需要这个变量，因此要声明全局变量
+
+<font color=red>自动播放功能</font>
+
+添加一个定时器
+
+自动播放轮播图，实际就类似于点击了右侧按钮
+
+此时使用代码调用右侧按钮点击事件 arrow_r.click()
+
+鼠标经过focus就停止定时器
+
+鼠标离开focus就开启定时器
+
+##### 节流阀
+
+防止轮播图按钮连续点击造成播放过快
+
+节流阀目的：当上一个函数动画内容执行完毕，再去执行下一个函数动画，让事件无法连续触发。
+
+核心实现思路：利用回调函数，添加一个变量来控制，锁住函数和解锁函数
+
+开始设置一个变量var flag = true;
+
+if(flag){flag = false;do something} 关闭水龙头
+
+利用回调函数 动画执行完毕 flag=true 打开水龙头
+
+## JavaScript面向对象
+
+### 面向对象编程思想
+
+#### 两大编程思想
+
++ 面向过程
++ 面向对象
+
+#### 面向过程编程 POP(Process-oriented programming)
+
+面向过程就是分析出解决问题所需要的步骤，然后利用函数把这些步骤一步一步实现，使用的时候再一个一个的一次调用就可以了
+
+#### 面向对象编程 OOP(Object Oriented Programming)
+
+面向对象是把事务分解成为一个个对象，然后由对象之间分工与合作。
+
+#### ES6中的类和对象
+
+面向对象更贴近我们的实际生活，可以使用面向对象描述现实世界事物，但是事物分为具体的事物和抽象的事物
+
+##### 对象
+
+在JS中，对象是一组无序的相关属性和方法的集合，所有的事物都是对象，例如字符串、数值、数组、函数等。
+
+对象是由属性和方法组成的：
+
++ 属性：事物的特征，在对象中用属性来表示(常用名词)
++ 方法：事物的行为，在对象中用方法来表示(常用动词)
+
+##### 类 class
+
+在ES6中新增加了类的概念，可以使用class关键字声明一个类，之后以这个类来实例化对象。
+
+类抽象了对象的公共部分，它泛指某一大类(class)
+
+对象特指某一个，通过类实例化一个具体的对象
+
+##### 创建类
+
+语法：
+
+```javascript
+class name {
+	// class body
+}
+```
+
+##### 类 constructor 构造函数
+
+constructor()方法是类的构造函数(默认方法)，用于传递参数，返回实例对象，通过new命令生成对象实例时，自动调用该方法。如果没有明显定义，类内部会自动创建一个constructor()
