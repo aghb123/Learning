@@ -420,3 +420,6 @@ wz为远程库名
 git push wz main
 ```
 
+删除远程仓库
+
+git remote rm 远程仓库名

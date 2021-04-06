@@ -2508,3 +2508,61 @@ class name {
 ##### 类 constructor 构造函数
 
 constructor()方法是类的构造函数(默认方法)，用于传递参数，返回实例对象，通过new命令生成对象实例时，自动调用该方法。如果没有明显定义，类内部会自动创建一个constructor()
+
+##### 类添加方法
+
+语法
+
+```javascript
+class Star {
+    // 类的共有属性放到 constructor 里面
+    constructor(uname, age) {
+        this.uname = uname;
+        this.age = age;
+    }
+    sing(song) {
+        console.log(this.uname + song);
+    }
+}
+```
+
+#### 类的继承
+
+##### 继承
+
+语法：
+
+```javascript
+class Father { //父类
+}
+class Son extends Father { //子类继承父类
+}
+```
+
+##### super关键字
+
+<font color=red>super关键字</font>用于访问和调用对象父类上的函数。<font color=red>可以调用父类的构造函数</font>，也可以调用父类的普通函数
+
+语法：
+
+```javascript
+class Father {
+	say() {
+		return 'father'
+	}
+}
+class Son extends Father {
+	say() {
+		// console.log('son');
+		console.log(super.say() + '的儿子');
+		// super.say() 就是调用父类中的普通函数 say()
+	}
+}
+var son = new Son();
+son.say();
+// 1. 继承中，如果实例化子类输出一个方法，先看子类有没有这个方法，如果有就先执行子类的
+// 2. 继承中，如果子类里面没有，就去查找父类有没有这个方法，如果有，就执行父类的这个方法(就近原则)
+```
+
+<font color=red>注意：子类在构造函数中使用super，必须放到this前面(必须先调用父类的构造方法，再使用子类构造方法)</font>
+
