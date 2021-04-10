@@ -19,6 +19,8 @@ class Tab {
                 this.lis[i].index = i;
                 this.lis[i].onclick = this.toggleTab;
                 this.remove[i].onclick = this.removeTab;
+                this.spans[i].ondblclick = this.editTab;
+                this.sections[i].ondblclick = this.editTab;
             }
         }
         // 因为动态添加元素 需要重新获取对应的元素 获取所有的小li 和 section
@@ -26,6 +28,7 @@ class Tab {
             this.lis = this.main.querySelectorAll('li');
             this.sections = this.main.querySelectorAll('section');
             this.remove = this.main.querySelectorAll('.icon-guanbi');
+            this.spans = this.main.querySelectorAll('.firstnav li span:first-child');
         }
         // 1. 切换功能
     toggleTab() {
@@ -58,8 +61,34 @@ class Tab {
             that.lis[index].remove();
             that.sections[index].remove();
             that.init();
+            // 当我们删除的不是选中状态的li 的时候，原来的选中状态li保持不变
+            if (document.querySelector('.liactive')) return;
+            // 当我们删除了选中状态的这个li的时候，让它的前一个小li处于选中状态
+            index--;
+            // 手动调用点击事件 不需要鼠标触发
+            that.lis[index] && that.lis[index].click();
         }
         // 4. 修改功能
-    editTab() {}
+    editTab() {
+        var str = this.innerHTML;
+        // 双击禁止选中文字
+        window.getSelection ? window.getSelection().removeAllRanges() : document.selection.empty();
+        // alert(11);
+        this.innerHTML = '<input type="text" />';
+        var input = this.children[0];
+        input.value = str;
+        input.select(); // 文本框里面的文字处于选定状态
+        // 当我们离开文本框就把文本框里面的值给span
+        input.onblur = function() {
+                this.parentNode.innerHTML = this.value;
+            }
+            // 按下回车也可以把文本框里面的值给span
+        input.onkeyup = function(e) {
+            if (e.keyCode === 13) {
+                // 手动调用表单失去焦点事件 不需要鼠标离开操作
+                this.blur();
+            }
+        }
+    }
 }
 new Tab('#tab');
