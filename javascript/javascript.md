@@ -2648,5 +2648,74 @@ constructor主要用于记录该对象引用于哪个构造函数，它可以让
 
 ![image-20210412220338156](javascript.assets/image-20210412220338156.png)
 
+##### JavaScript的成员查找机制(规则)
 
+1. 当访问一个对象的属性(包括方法)时，首先查找这个对象自身有没有该属性
+2. 如果没有就查找它的原型(也就是`__proto__`指向的prototype原型对象)
+3. 如果还没有就查找原型对象的原型(Object的原型对象)
+4. 依次类推一直找到Object为止(null)
+
+##### 原型对象this指向
+
+```javascript
+function Star(uname, age) {
+    this.uname = uname;
+    this.age = age;
+}
+var that;
+Star.prototype.sing = function() {
+    console.log('我会唱歌');
+    that = this;
+}
+var ldh = new Star('刘德华', 18);
+// 1. 在构造函数中，里面this指向的是对象实例
+ldh.sing();
+console.log(that === ldh); // true
+// 2. 原型对象函数里面的this指向的是实例对象ldh
+```
+
+##### 扩展内置对象
+
+可以通过原型对象，对原来的内置对象进行扩展自定义的方法。比如给数组增加自定义求偶数和的功能。
+
+注意：数组和字符串内置对象不能给原型对象覆盖操作Array.prototype = {}，只能是Array.prototype.xxx = function() {}的方式
+
+#### 继承
+
+ES6之前并没有提供extends继承。可以通过构造函数+原型对象模拟实现继承，被称为组合继承。
+
+##### call()
+
+调用这个函数，并且修改函数运行时的this指向
+
+```javascript
+fun.call(thisArg, arg1, arg2, ...)
+```
+
++ thisArg:当前调用函数this的指向对象
++ arg1, arg2:传递的其它参数
+
+##### 借用构造函数继承父类型属性
+
+核心原理：通过call()把父类型的this指向子类型的this,这样就可以实现子类型继承父类型的属性
+
+```javascript
+// 借用父构造函数继承属性
+// 1. 父构造函数
+function Father(uname, age) {
+    // this 指向父构造函数的对象实例
+    this.uname = uname;
+    this.age = age;
+}
+// 2. 子构造函数
+function Son(uname, age, score) {
+    // this 指向子构造函数的对象实例
+    Father.call(this, uname, age);
+    this.score = score;
+}
+var son = new Son('刘德华', 18, 100);
+console.log(son);
+```
+
+##### 借用原型对象继承父类型方法
 
