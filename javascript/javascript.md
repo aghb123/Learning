@@ -2644,6 +2644,14 @@ constructor主要用于记录该对象引用于哪个构造函数，它可以让
 
 ![image-20210412215510199](javascript.assets/image-20210412215510199.png)
 
+(1) 构造函数有原型对象prototype
+
+(2) 构造函数原型对象prototype 里面有constructor 指向构造函数本身
+
+(3) 构造函数可以通过原型对象添加方法
+
+(4) 构造函数创建的实例对象`__proto__`原型指向 构造函数的原型对象
+
 ##### 原型链
 
 ![image-20210412220338156](javascript.assets/image-20210412220338156.png)
@@ -2719,3 +2727,64 @@ console.log(son);
 
 ##### 借用原型对象继承父类型方法
 
+```javascript
+// 借用父构造函数继承方法
+// 1. 父构造函数
+function Father(uname, age) {
+    // this 指向父构造函数的对象实例
+    this.uname = uname;
+    this.age = age;
+}
+Father.prototype.money = function() {
+    console.log(10000);
+}
+// 2. 子构造函数
+function Son(uname, age, score) {
+    // this 指向子构造函数的对象实例
+    Father.call(this, uname, age);
+    this.score = score;
+}
+// Son.prototype = Father.prototype; 这样直接赋值会有问题，如果修改了子原型对象，父原型对象也会跟着一起变化
+Son.prototype = new Father();
+// 如果利用对象的形式修改了原型对象，别忘了利用constructor 指回原来的构造函数
+Son.prototype.constructor = Son;
+// 这个是子构造函数专门的方法
+Son.prototype.exam = function() {
+    console.log('考试');
+}
+var son = new Son('刘德华', 18, 100);
+console.log(son);
+console.log(Father.prototype);
+console.log(Son.prototype.constructor);
+```
+
+#### 类的本质
+
+1. class本质还是function
+2. 类的所有方法都定义在类的prototype属性上
+3. 类创建的实例，里面也有`__proto__`指向类的prototype原型对象
+4. 所以ES6的类的绝大部分功能，ES5都可以做到，新的class写法只是让对象原型的写法更加清晰，更像面向对象编程的语法而已
+5. 所以ES6的类其实就是语法糖
+6. 语法糖：语法糖就是一种便捷写法。简单理解，有两种方法可以实现同样的功能，但是一种写法更加清晰、方便，那么这个方法就是语法糖
+
+### ES5中的新增方法
+
+#### ES5新增方法概述
+
+ES5中新增了一些方法，可以很方便的操作数组或者字符串，这些方法主要包括：
+
++ 数组方法
++ 字符串方法
++ 对象方法
+
+#### 数组方法
+
+迭代(遍历)方法：forEach(),map(),filter(),some(),every()
+
+```javascript
+array.forEach(function(currentValue,index,arr))
+```
+
++ currentValue:数组当前项的值
++ index:数组当前项的索引
++ arr:数组对象本身
