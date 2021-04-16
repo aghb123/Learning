@@ -2788,3 +2788,24 @@ array.forEach(function(currentValue,index,arr))
 + currentValue:数组当前项的值
 + index:数组当前项的索引
 + arr:数组对象本身
+
+```javascript
+array.filter(function(currentValue,index,arr))
+```
+
++ filter()方法创建一个新的数组，新数组中的元素是通过检查指定数组中符合条件的所有元素，主要用于筛选数组
++ 注意它直接返回一个新数组
++ currentValue：数组当前项的值
++ index：数组当前项的索引
++ arr：数组对象本身
+
+```javascript
+array.some(function(currentValue,index,arr))
+```
+
++ some()方法用于检测数组中的元素是否满足指定条件。通俗点 查找数组中是否有满足条件的元素
++ 注意它返回值是布尔值，如果查找到这个元素，就返回true，如果查找不到就返回false
++ 如果找到第一个满足条件的元素，则终止循环，不再继续查找
++ currentValue：数组当前项的值
++ index：数组当前项的索引
++ arr：数组对象本身
