@@ -2809,3 +2809,55 @@ array.some(function(currentValue,index,arr))
 + currentValue：数组当前项的值
 + index：数组当前项的索引
 + arr：数组对象本身
+
+#### 字符串方法
+
+`trim()`方法会从一个字符串的两端删除空白字符
+
+```javascript
+str.trim()
+```
+
+trim()方法并不影响原字符串本身，它返回的是一个新的字符串
+
+#### 对象方法
+
+Object.defineProperty()定义对象中新属性或修改原有的属性
+
+```javascript
+Object.defineProperty(obj,prop,descriptor);
+```
+
++ obj:必需。目标对象
++ prop:必需。需定义或修改的属性的名字
++ descriptor:必需。目标属性所拥有的特性
+
+Object.defineProperty()第三个参数descriptor说明：以对象形式{}书写
+
++ value:设置属性的值 默认为undefined
++ writable:值是否可以重写。true|false 默认为false
++ enumerable:目标属性是否可以被枚举。 true|false 默认为false
++ configurable:目标属性是否可以被删除或是否可以再次修改特性 true|false 默认为false
+
+### 函数进阶
+
+#### 函数的定义和调用
+
+##### 函数的定义方式
+
+1. 函数声明方式 function 关键字 (命名函数)
+2. 函数表达式(匿名函数)
+3. new Function()
+
+```javascript
+var f = new Function('参数1', '参数2', ... ,'函数体');
+```
+
++ Function里面参数必须是字符串格式
++ 第三种方式执行效率低，也不方便书写，因此较少使用
++ 所有函数都是Function的实例(对象)
++ 函数也属于对象
+
+![image-20210417183800960](javascript.assets/image-20210417183800960.png)
+
+ 
