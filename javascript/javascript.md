@@ -2916,3 +2916,110 @@ setInterval(function() {}, 1000); // 这个函数是定时器自动1秒钟调用
 | 定时器函数   | window                                    |
 | 立即执行函数 | window                                    |
 
+JavaScript专门提供了一些函数方法来帮我们更优雅的处理函数内部this的指向问题，常用的有bind(),call(),apply()三种方法
+
+1. call方法
+
+call()方法调用一个对象。简单理解为调用函数的方式，但是它可以改变函数的this指向
+
+```javascript
+// call() 第一个可以调用函数 第二个可以改变函数内的this指向
+// call() 的主要作用可以实现继承
+function Father(uname, age, sex) {
+    this.uname = uname;
+    this.age = age;
+    this.sex = sex;
+}
+
+function Son(uname, age, sex) {
+    Father.call(this, uname, age, sex);
+}
+var son = new Son('ldh', 18, 'male');
+console.log(son);
+```
+
+2. apply方法
+
+apply()方法调用一个函数。简单理解为调用函数的方式，但是它可以改变函数的this指向。
+
+```javascript
+fun.apply(thisArg, [argsArray]);
+```
+
++ thisArg:在fun函数运行时指定的this值
++ argsArray:传递的值，必须包含在数组里面
++ 返回值就是函数的返回值，因为它就是调用函数
+
+```javascript
+var o = {
+    name: 'andy'
+};
+
+function fn(arr) {
+    console.log(this);
+    console.log(arr);
+}
+fn.apply(o, ['pink']);
+// 1. 也是调用函数 第二个可以改变函数内部的this指向
+// 2. 但是他的参数必须是数组(伪数组)
+// 3. apply() 的主要应用 比如说利用 apply 借助于数学内置对象求最大值
+var arr = [1, 66, 3, 99, 4];
+var max = Math.max.apply(Math, arr);
+console.log(max);
+```
+
+
+
+3. bind方法
+
+bind()方法不会调用函数。但是能改变函数内部this指向
+
+```javascript
+fun.bind(thisArg, arg1, arg2, ...);
+```
+
++ thisArg:在fun函数运行时指定的this值
++ arg1，arg2:传递的其它参数
++ 返回由指定的this值和初始化参数改造的原函数拷贝
+
+```javascript
+var o = {
+    name: 'andy'
+};
+
+function fn(a, b) {
+    console.log(this);
+    console.log(a + b);
+}
+var f = fn.bind(o, 1, 2);
+f();
+// 1. 不会调用原来的函数 可以改变原来函数内部的this指向
+// 2. 返回的是原函数改变this之后产生的新函数
+// 3. 如果有的函数不需要立即调用，但是又想改变这个函数内部的this指向此时用bind
+// 4. 有一个按钮，当点击了之后，就禁用这个按钮，3秒钟之后开启这个按钮
+var btn = document.querySelector('button');
+btn.onclick = function() {
+    this.disabled = true;
+    var that = this;
+    setTimeout(function() {
+        // that.disabled = false; // 定时器函数里面的this 指向的是window
+        this.disabled = false;
+    }.bind(this), 3000) // 这个this 指向的是btn 这个对象
+}
+```
+
+##### call apply bind总结
+
+相同点：都可以改变函数内部的this指向
+
+区别点：
+
+1. call和apply会调用函数，并且改变函数内部this指向
+2. call和apply传递的参数不一样，call传递参数aru1,aru2,...形式 apply必须数组形式[arg]
+3. bind不会调用函数，可以改变函数内部this指向
+
+主要应用场景：
+
+1. call经常做继承
+2. apply经常跟数组有关系。比如借助于数学对象实现数组最大值最小值
+3. bind 不调用函数，但是还想改变this指向。比如改变定时器内部的this指向
