@@ -629,7 +629,7 @@ var fun = function(){};
 
 + 全局变量在代码的任何位置都可以使用
 + 在全局作用域下`var`声明的变量是全局变量
-+ 特殊情况下，在函数内不适用`var`声明的变量也是全局变量(不建议使用)
++ 特殊情况下，在函数内不使用`var`声明的变量也是全局变量(不建议使用)
 
 #### 局部变量
 
@@ -3368,5 +3368,447 @@ regexpObj.test(str);
 | \s       | 匹配空格(包括换行符、制表符、空格符等)，相当于[\t\r\n\v\f]   |
 | \S       | 匹配非空格的字符，相当于`[^\t\r\n\v\f]`                      |
 
+##### replace替换
 
+replace()方法可以实现替换字符串操作，用来替换的参数可以是一个字符串或是一个正则表达式。
+
+```javascript
+stringObject.replace(regexp/substr,replacement)
+```
+
+1. 第一个参数：被替换的字符串 或者 正则表达式
+2. 第二个参数：替换为的字符串
+3. 返回值是一个替换完毕的新字符串
+
+##### 正则表达式参数
+
+```javascript
+/表达式/[switch]
+```
+
+switch(也称为修饰符)按照什么样的模式来匹配。有三种值：
+
++ g:全局匹配
++ i:忽略大小写
++ gi:全局匹配和忽略大小写
+
+### ES6
+
+为什么使用ES6？
+
++ 变量提升特性增加了程序运行时的不可预测性
++ 语法过于松散，实现相同的功能，不同的人可能会写出不同的代码
+
+#### ES6的新增语法
+
+##### let
+
+ES6中新增的用于声明变量的关键字。
+
++ let声明的变量只在所处于的块级有效
++ 不存在变量提升
++ 暂时性死区
+
+```javascript
+if (true) {
+	let a = 10;
+    var b = 20;
+}
+console.log(a); // a is not defined
+console.log(b); // 20
+```
+
+```javascript
+console.log(m); // Cannot access 'm' before initialization
+let m = 20;
+```
+
+```javascript
+var temp = 123;
+if(true){
+	tmp = 'abc';
+	let tmp;
+}
+```
+
+注意：使用let关键字声明的变量才具有块级作用域，使用var声明的变量不具备块级作用域特性。
+
+##### const
+
+作用：声明常量，常量就是值(内存地址)不能变化的量。
+
++ 具有块级作用域
+
+```javascript
+if (true) {
+	const a = 10;
+}
+console.log(a); // a is not defined
+```
+
++ 声明常量时必须赋值
+
+```javascript
+const PI; // Missing initializer in const declaration
+```
+
++ 常量赋值后，值不能修改
+
+```javascript
+const PI = 3.14;
+PI = 100; // Assignment to constant variable.
+```
+
+```javascript
+const ary = [100, 200];
+ary[0] = 'a';
+ary[1] = 'b';
+console.log(ary); // ['a','b']
+ary = ['a', 'b']; // Assignment to constant variable.
+```
+
+##### let、const、var的区别
+
+1. 使用var声明的变量，其作用域为该语句所在的函数内，且存在变量提升现象
+2. 使用let声明的变量，其作用域为该语句所在代码块内，不存在变量提升
+3. 使用const声明的是常量，在后面出现的代码中不能再修改该常量的值
+
+| var          | let            | const          |
+| ------------ | -------------- | -------------- |
+| 函数级作用域 | 块级作用域     | 块级作用域     |
+| 变量提升     | 不存在变量提升 | 不存在变量提升 |
+| 值可更改     | 值可更改       | 值不可更改     |
+
+##### 解构赋值
+
+ES6中允许从数组中提取值，按照对应位置，对变量赋值。对象也可以实现解构。
+
+1. 数组解构
+
+```javascript
+let ary = [1, 2, 3];
+let [a, b, c] = ary;
+console.log(a);
+console.log(b);
+console.log(c);
+```
+
+如果解构不成功，变量的值为undefined
+
+```javascript
+let [foo] = []; // foo undefined
+```
+
+2. 对象解构
+
+对象解构允许使用变量的名字匹配对象的属性 匹配成功 将对象属性的值赋值给变量
+
+```javascript
+let person = {
+    name: 'andy',
+    age: 20
+};
+let {
+    name,
+    age
+} = person;
+console.log(name);
+console.log(age);
+```
+
+```javascript
+let {
+    name: myName,
+    age: myAge // myName myAge 属于别名
+} = person;
+let {name:myName} = person;
+console.log(myName);
+console.log(myAge);
+```
+
+##### 箭头函数
+
+ES6中新增的定义函数的方式
+
+```javascript
+() => {}
+const fn = () => {}
+```
+
+函数体中只有一句代码，且代码的执行结果就是返回值，可以省略大括号
+
+```javascript
+// 传统方式
+function sum(num1, num2) {
+	return num1 + num2;
+}
+// 箭头函数
+const sum = (num1, num2) => num1 + num2;
+```
+
+如果形参只有一个，可以省略小括号
+
+```javascript
+// 传统方式
+function fn(v) {
+	return v;
+}
+// 箭头函数
+const fn = v => {
+	alert(v);
+}
+```
+
+箭头函数不绑定this关键字，箭头函数中的this，指向的是函数<font color=red>定义位置</font>的上下文this
+
+```javascript
+// 面试题
+var obj = {
+    age: 20,
+    say: () => {
+    	alert(this.age)
+	}
+}
+obj.say(); // undefined
+```
+
+##### 剩余参数
+
+剩余参数语法允许我们将一个不定数量的参数表示为一个数组
+
+```javascript
+function sum(first, ...args) {
+	console.log(first);
+    console.log(args);
+}
+sum(10, 20, 30); // 10 Array(2)
+
+const sum = (...args) => {
+    let total = 0;
+    args.forEach(item => total += item)
+    console.log(total);
+}
+sum(10, 20);
+sum(10, 20, 30);
+```
+
+剩余参数和解构配合使用
+
+```javascript
+let students = ['zs', 'ls', 'ww'];
+let [s1, ...s2] = students;
+console.log(s1);
+console.log(s2);
+```
+
+##### Array的扩展方法
+
+1. 扩展运算符(展开语法)
+
+扩展运算符可以将数组或者对象转为用逗号分隔的参数序列
+
+```javascript
+// 扩展运算符
+let ary = [1, 2, 3];
+console.log(...ary);
+console.log(1, 2, 3);
+```
+
+扩展运算符可以应用于合并数组
+
+```javascript
+// 方法1
+let ary1 = [1, 2, 3];
+let ary2 = [4, 5, 6];
+let ary3 = [...ary1, ...ary2];
+console.log(ary3);
+
+// 方法2
+ary1.push(...ary2);
+```
+
+将类数组或可遍历对象转换为真正的数组
+
+```javascript
+let oDivs = document.getElementsByTagName('div');
+console.log(oDivs);
+oDivs = [...oDivs];
+oDivs.push('a');
+console.log(oDivs);
+```
+
+2. 构造函数方法：Array.from()
+
+将类数组或可遍历对象转换为真正的数组
+
+```javascript
+var arrayLike = {
+    '0': 'zs',
+    '1': 'ls',
+    '2': 'ww',
+    'length': 3
+}
+var ary4 = Array.from(arrayLike);
+console.log(ary4);
+```
+
+方法还可以接收第二个参数，作用类似于数组的map方法，用来对每个元素进行处理，将处理后的值放入返回的数组
+
+```javascript
+let arrayLike1 = {
+    '0': 1,
+    '1': 2,
+    'length': 2
+}
+let newAry = Array.from(arrayLike1, it => it * 2)
+console.log(newAry);
+```
+
+3. 实例方法：find()
+
+用于找出第一个符合条件的数组成员，如果没有找到返回undefined
+
+```javascript
+let ary5 = [{
+    id: 1,
+    name: 'zs'
+}, {
+    id: 2,
+    name: 'ls'
+}];
+let target = ary5.find(item => item.id == 2);
+console.log(target);
+```
+
+4. 实例方法：findIndex()
+
+用于找出第一个符合条件的数组成员的位置，如果没有找到返回-1
+
+```javascript
+let ary6 = [10, 20, 50];
+let index = ary6.findIndex(item => item > 15)
+console.log(index);
+```
+
+5. 实例方法：includes()
+
+表示某个数组是否包含给定的值，返回布尔值
+
+```javascript
+[1,2,3].includes(2); // true
+```
+
+##### String的扩展方法
+
+1. 模板字符串
+
+ES6新增的创建字符串的方式，使用反引号定义
+
+```javascript
+let name = `zs`;
+```
+
+模板字符串中可以解析变量
+
+```javascript
+let name = `zs`;
+let sayHello = `hello, my name is ${name}`;
+```
+
+模板字符串中可以换行
+
+```javascript
+let result = {
+    name: 'zs',
+    age: 20
+}
+let html = `
+    <div>
+    <span>${result.name}</span>
+    <span>${result.age}</span>
+    </div>
+`;
+```
+
+在模板字符串中可以调用函数
+
+```javascript
+const sayHello = function() {
+	return 'haha';
+}
+let greet = `${sayHello()} abc`;
+console.log(greet);
+```
+
+2. 实例方法：startsWith()和endsWith()
+
++ startsWith:表示参数字符串是否在原字符串的头部，返回布尔值
++ endsWith:表示参数字符串是否在原字符串的尾部，返回布尔值
+
+```javascript
+let str = 'hello world!';
+console.log(str.startsWith('hello'));
+console.log(str.endsWith('!'));
+```
+
+3. 实例方法：repeat()
+
+repeat方法表示将原字符串重复n次，返回一个新字符串
+
+```javascript
+'x'.repeat(3); //'xxx'
+'hello'.repeat(2); //'hellohello'
+```
+
+#### ES6的内置对象扩展
+
+##### Set数据解构
+
+ES6提供了新的数据结构Set。它类似于数组，但是成员的值都是唯一的，没有重复的值。
+
+Set本身是一个构造函数，用来生成Set数据结构
+
+```javascript
+const s = new Set();
+```
+
+Set函数可以接受一个数组作为参数，用来初始化
+
+```javascript
+const set = new Set([1,2,3,4,5]);
+```
+
+Set可以用来做数组去重
+
+```javascript
+const s3 = new Set(['a', 'b', 'a', 'b']);
+console.log(s3.size);
+const ary = [...s3];
+console.log(ary);
+```
+
+
+
+实例方法：
+
++ add(value):添加某个值，返回Set结构本身
++ delete(value):删除某个值，返回一个布尔值，表示删除是否成功
++ has(value):返回一个布尔值，表示该值是否为Set的成员
++ clear():清除所有成员，没有返回值
+
+```javascript
+const s = new Set();
+s.add(1).add(2).add(3); 
+s.delete(2);
+s.has(1);
+s.clear();
+```
+
+
+
+遍历：Set结构的实例与数组一样，也拥有forEach方法，用于对每个成员执行某种操作，没有返回值
+
+```javascript
+s.forEach(value => console.log(value))
+```
 

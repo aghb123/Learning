@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        // String的扩展方法
+        let name = `zas`;
+        console.log(name);
+
+        // 模板字符串中可以解析变量
+        // let sayHello = `hello, my name is ${name}`;
+        // console.log(sayHello);
+
+        // 模板字符串中可以换行
+        let result = {
+            name: 'zs',
+            age: 20
+        }
+        let html = `
+            <div>
+                <span>${result.name}</span>
+                <span>${result.age}</span>
+            </div>
+        `;
+        console.log(html);
+
+        // 在模板字符串中可以调用函数
+        const sayHello = function() {
+            return 'haha';
+        }
+        let greet = `${sayHello()} abc`;
+        console.log(greet);
+
+        // 实例方法：startsWith()和endsWith()
+        // startsWith:表示参数字符串是否在原字符串的头部，返回布尔值
+        // endsWith:表示参数字符串是否在原字符串的尾部，返回布尔值
+        let str = 'hello world!';
+        console.log(str.startsWith('hello'));
+        console.log(str.endsWith('!'));
+    </script>
+</body>
+
+</html>
