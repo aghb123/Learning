@@ -423,3 +423,30 @@ git push wz main
 删除远程仓库
 
 git remote rm 远程仓库名
+
+#### github连接
+自从2021年8月31日起，连接github需要令牌，也可以使用ssh
+
+目前亲测可使用的是SSH方式
+
+实现步骤：
+
+  1. 在本机生成一个公钥和私钥对
+
+windows系统执行ssh-keygen.exe工具来生成密钥对（不需要密码，一直Enter就行）
+
+id_rsa为私钥，id_rsa.pub是公钥。私钥在自己的设备上存着就可以，别人拿到你的公钥就可以验证你的身份
+
+2. 将生成的公钥添加到GitHub账户中
+
+最后的计算机名和它前面的空格不用复制，复制也可以。
+
+![image-20211126000657489](git.assets/image-20211126000657489.png)
+
+3. 将本机中已经clone下的项目由HTTPS方式更改为SSH方式
+
+在目标项目的目录中打开Git Bash终端，输入`git remote -v`可以查看remote仓库
+
+![image-20211126000932971](git.assets/image-20211126000932971.png)
+
+对于不是SSH连接URL的远程仓库地址，可以使用```git remote set-url origin git@github.com:xxxxxx```更新url
