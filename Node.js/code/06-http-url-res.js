@@ -6,6 +6,7 @@ var server = http.createServer()
 // 2. 监听 request 请求事件 设置请求处理函数
 server.on('request', function(req, res) {
     // console.log('收到请求了，请求路径是：' + req.url);
+    console.log('客户端端口号：', req.socket.remoteAddress, req.socket.remotePort);
 
     // res.write('hello')
     // res.write(' world')
